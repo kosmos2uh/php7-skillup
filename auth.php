@@ -1,50 +1,50 @@
 <?php
 include "include/header.php";
 
-/*$_SESSION = [
-    'user' => [
-        'name' => '',
-        'auth' => '',
-    ],
-];*/
+$error = false;
+
+$email_user = 'user@gmail.com';
+$password_user = '123456';
 
 $is_authorized = isset($_SESSION['user']['auth']) && $_SESSION['user']['auth'] == 1;
-if(!$is_authorized) {
-    header("Location: /auth.php", true, 301);
+if($is_authorized) {
+    header("Location: /profile.php", true, 301);
+}
+
+$email = $_POST['email'] ?? '';
+$password = $_POST['password'] ?? '';
+
+if($email == $email_user && $password == $password_user) {
+    $_SESSION = [
+        'user' => [
+            'name' => 'Константин',
+            'auth' => 1,
+        ],
+    ];
+    header("Location: /profile.php", true, 301);
+    exit;
+} elseif(isset($_POST['email'])) {
+    $error = 'Неверная почта или пароль';
 }
 
 ?>
-    <h1>Персональный раздел</h1>
+    <h1>Авторизация</h1>
     <div class="row mb-3">
-        <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">World</strong>
-                    <h3 class="mb-0">Featured post</h3>
-                    <div class="mb-1 text-muted">Nov 12</div>
-                    <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="stretched-link">Continue reading</a>
+        <div class="col-md-4 offset-4">
+            <form method="post" action="/auth.php">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email</label>
+                    <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo $email; ?>">
                 </div>
-                <div class="col-auto d-none d-lg-block">
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input name="password" type="password" class="form-control" id="exampleInputPassword1">
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-success">Design</strong>
-                    <h3 class="mb-0">Post title</h3>
-                    <div class="mb-1 text-muted">Nov 11</div>
-                    <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="stretched-link">Continue reading</a>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-                </div>
-            </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <?php if($error) { ?>
+                <div class="alert alert-danger mt-3" role="alert"><?php echo $error; ?></div>
+            <?php } ?>
         </div>
     </div>
 <?php include "include/footer.php" ?>

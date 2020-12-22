@@ -1,4 +1,19 @@
-<?php include "include/header.php" ?>
+<?php
+include "include/header.php";
+
+/*$_SESSION = [
+    'user' => [
+        'name' => '',
+        'auth' => '',
+    ],
+];*/
+
+$is_authorized = isset($_SESSION['user']['auth']) && $_SESSION['user']['auth'] == 1;
+if(!$is_authorized) {
+    header("Location: /auth.php", true, 301);
+}
+
+?>
     <h1>Персональный раздел</h1>
     <div class="row mb-3">
         <div class="col-md-6">
