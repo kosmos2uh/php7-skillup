@@ -1,16 +1,21 @@
 <?php
 include "include/header.php";
-$arNews = [
-        ['datetime' => '19:16', 'title' => 'Тайсон согласовал контракт с Интернасьоналом', 'url' => '#',],
-        ['datetime' => '19:11', 'title' => 'Дети более уязвимы перед новым штаммом коронавируса', 'url' => '#',],
-        ['datetime' => '19:01', 'title' => 'Россия направила в ЦАР 300 военных инструкторов', 'url' => '#',],
-        ['datetime' => '18:56', 'title' => 'Нафтогаз и Укрнафта урегулировали многолетний спор', 'url' => '#',],
-        ['datetime' => '18:55', 'title' => 'Редкач обвинил украинского боксера в покупке боя', 'url' => '#',],
-        ['datetime' => '18:50', 'title' => 'Мистер Олимпия, слияние планет и борщ: фото дня', 'url' => '#',],
-        ['datetime' => '18:40', 'title' => 'В ЦОЗ ожидают для Украины самую "слабую" вакцину', 'url' => '#',],
-        ['datetime' => '18:33', 'title' => 'Масштабный пожар на складах Киева потушен', 'url' => '#',],
-        ['datetime' => '18:29', 'title' => 'На руднике в Канаде нашли мумию древнего волка', 'url'  => '#',],
-];
+$arNews = [];
+
+$xml = 'http://k.img.com.ua/rss/ru/all_news2.0.xml';
+$strXML = file_get_contents($xml);
+$objXML = simplexml_load_string($strXML, 'SimpleXMLElement', LIBXML_NOCDATA);
+$jsonXML = json_encode($objXML);
+$arXML = json_decode($jsonXML, true);
+
+foreach ($arXML['channel']['item'] as $item) {
+    $arNews[] = [
+        'id' => $item['guid'],
+        'datetime' => date('H:i', strtotime($item['pubDate'])),
+        'title' => $item['title'],
+        'url' => '/detail.php?id=' . $item['guid'],
+    ];
+}
 
 ?>
     <h1>Список новостей</h1>
