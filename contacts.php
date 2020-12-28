@@ -1,5 +1,5 @@
 <?php
-include "include/header.php";
+include "include/template/header.php";
 ?>
     <h1>Контакты</h1>
     <div class="row mb-3">
@@ -42,7 +42,7 @@ include "include/header.php";
             } ?>
         </div>
         <div class="col-4">
-            <?php include "include/right_popular_news.php" ?>
+            <?php include "include/template/right_popular_news.php" ?>
         </div>
     </div>
-<?php include "include/footer.php" ?>
+<?php include "include/template/footer.php" ?>

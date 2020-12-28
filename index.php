@@ -1,4 +1,8 @@
-<?php include $_SERVER['DOCUMENT_ROOT'] . "/include/header.php" ?>
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . "/include/template/header.php";
+
+$arNews = getLastNews(10);
+?>
     <h1>Новости - это вам не старости!</h1>
     <div class="row mb-3">
         <div class="col">
@@ -9,20 +13,16 @@
         <div class="col-8">
             <h3>Посдедние новости</h3>
             <ul class="list-group">
-                <li class="list-group-item"><a href="#">Cras justo odio</a></li>
-                <li class="list-group-item"><a href="#">Dapibus ac facilisis in</a></li>
-                <li class="list-group-item"><a href="#">Morbi leo risus</a></li>
-                <li class="list-group-item"><a href="#">Porta ac consectetur ac</a></li>
-                <li class="list-group-item"><a href="#">Vestibulum at eros</a></li>
-                <li class="list-group-item"><a href="#">Cras justo odio</a></li>
-                <li class="list-group-item"><a href="#">Dapibus ac facilisis in</a></li>
-                <li class="list-group-item"><a href="#">Morbi leo risus</a></li>
-                <li class="list-group-item"><a href="#">Porta ac consectetur ac</a></li>
-                <li class="list-group-item"><a href="#">Vestibulum at eros</a></li>
+                <?php foreach ($arNews as $news) { ?>
+                    <li class="list-group-item">
+                        <span class="badge bg-warning text-dark"><?php echo $news['datetime']; ?></span>
+                        <a href="<?php echo $news['url']; ?>"><?php echo $news['title']; ?></a>
+                    </li>
+                <?php } ?>
             </ul>
         </div>
         <div class="col-4">
-            <?php include $_SERVER['DOCUMENT_ROOT'] . "/include/right_popular_news.php" ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/include/template/right_popular_news.php" ?>
         </div>
     </div>
     <div class="row mb-3">
@@ -105,4 +105,4 @@
             </div>
         </div>
     </div>
-<?php include $_SERVER['DOCUMENT_ROOT'] . "/include/footer.php" ?>
+<?php include $_SERVER['DOCUMENT_ROOT'] . "/include/template/footer.php" ?>

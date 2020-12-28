@@ -1,5 +1,5 @@
 <?php
-include "include/header.php";
+include "include/template/header.php";
 
 /*$_SESSION = [
     'user' => [
@@ -47,4 +47,4 @@ if(!$is_authorized) {
             </div>
         </div>
     </div>
-<?php include "include/footer.php" ?>
+<?php include "include/template/footer.php" ?>

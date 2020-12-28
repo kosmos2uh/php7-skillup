@@ -1,5 +1,6 @@
 <?php
 session_start();
+include $_SERVER['DOCUMENT_ROOT'] . '/include/core/functions.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +24,7 @@ session_start();
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <?php include "include/menu.php" ?>
+            <?php include "include/template/menu.php" ?>
         </div>
     </div>
 </nav>

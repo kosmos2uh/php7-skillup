@@ -1,21 +1,7 @@
 <?php
-include "include/header.php";
-$arNews = [];
+include "include/template/header.php";
 
-$xml = 'http://k.img.com.ua/rss/ru/all_news2.0.xml';
-$strXML = file_get_contents($xml);
-$objXML = simplexml_load_string($strXML, 'SimpleXMLElement', LIBXML_NOCDATA);
-$jsonXML = json_encode($objXML);
-$arXML = json_decode($jsonXML, true);
-
-foreach ($arXML['channel']['item'] as $item) {
-    $arNews[] = [
-        'id' => $item['guid'],
-        'datetime' => date('H:i', strtotime($item['pubDate'])),
-        'title' => $item['title'],
-        'url' => '/detail.php?id=' . $item['guid'],
-    ];
-}
+$arNews = getLastNews();
 
 ?>
     <h1>Список новостей</h1>
@@ -40,7 +26,7 @@ foreach ($arXML['channel']['item'] as $item) {
             </nav>
         </div>
         <div class="col-4">
-            <?php include "include/right_popular_news.php" ?>
+            <?php include "include/template/right_popular_news.php" ?>
         </div>
     </div>
-<?php include "include/footer.php" ?>
+<?php include "include/template/footer.php" ?>
