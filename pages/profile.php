@@ -8,8 +8,7 @@ include "include/template/header.php";
     ],
 ];*/
 
-$is_authorized = isset($_SESSION['user']['auth']) && $_SESSION['user']['auth'] == 1;
-if(!$is_authorized) {
+if(!isAuthorizedUser()) {
     header("Location: /auth.php", true, 301);
 }
 

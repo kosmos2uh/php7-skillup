@@ -1,0 +1,19 @@
+Options +FollowSymLinks
+Options -Indexes
+DirectoryIndex index.php
+AddDefaultCharset UTF-8
+
+<IfModule mod_rewrite.c>
+RewriteEngine on
+
+RewriteBase /
+
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_URI} !(.*)/$
+#RewriteCond %{REQUEST_URI} !.(gif|jpg|css|js|swf|png|ico|txt|xml|ttf|woff|eot|svg|tar|log)$
+#RewriteRule ^(.*[^/])$ $1/ [L,R=301]
+
+#RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule .* /enter.php [L,QSA]
+</IfModule>

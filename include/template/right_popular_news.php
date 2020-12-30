@@ -1,5 +1,5 @@
 <?php
-$arNews = getPopularNew();
+$arNews = getPopularNews();
 ?>
 <h3>Популярные новости</h3>
 <ul class="list-group">

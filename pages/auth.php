@@ -3,24 +3,14 @@ include "include/template/header.php";
 
 $error = false;
 
-$email_user = 'user@gmail.com';
-$password_user = '123456';
-
-$is_authorized = isset($_SESSION['user']['auth']) && $_SESSION['user']['auth'] == 1;
-if($is_authorized) {
+if(isAuthorizedUser()) {
     header("Location: /profile.php", true, 301);
 }
 
 $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
 
-if($email == $email_user && $password == $password_user) {
-    $_SESSION = [
-        'user' => [
-            'name' => 'Константин',
-            'auth' => 1,
-        ],
-    ];
+if(loginUser($email, $password)) {
     header("Location: /profile.php", true, 301);
     exit;
 } elseif(isset($_POST['email'])) {
