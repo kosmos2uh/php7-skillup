@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 if(!empty($_POST)) {
 
     $_SESSION['mail_form'] = [
@@ -33,4 +33,4 @@ if(!empty($_POST)) {
 
 }
 
-header("Location: /contacts.php");
+header("Location: " . url('contacts'));

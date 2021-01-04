@@ -1,5 +1,4 @@
 <?php
-include "include/template/header.php";
 
 $error = false;
 
@@ -37,4 +36,3 @@ if(loginUser($email, $password)) {
             <?php } ?>
         </div>
     </div>
-<?php include "include/template/footer.php" ?>

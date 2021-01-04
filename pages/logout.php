@@ -1,5 +1,4 @@
 <?php
-include "include/template/header.php";
 
 logoutUser();
 

@@ -74,3 +74,75 @@ function logoutUser() {
         unset($_SESSION['user']);
     }
 }
+
+
+function getRoute($path = ''): array {
+
+    global $routes;
+
+    if($path == '') {
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    }
+
+    $arRoute = [
+        'name' => '',
+        'page' => '404',
+        'param' => [],
+    ];
+
+    foreach ($routes as $name => $arValue) {
+        $pattern = '/^' . str_replace('/', '\/', $arValue[0]) . '$/';
+        if(preg_match($pattern, $path, $matches)) {
+
+            $arRoute['name'] = $name;
+            $arRoute['page'] = $arValue[2];
+
+            if(count($matches) > 1) {
+                preg_match_all("/<(.+?)>/", $arValue[1], $matches2);
+
+                foreach ($matches2[1] as $key => $param_name) {
+                    $arRoute['param'][$param_name] = $matches[$key + 1];
+                }
+            }
+
+        }
+    }
+
+    return $arRoute;
+
+}
+
+
+function url($name, $params = []) {
+
+    global $routes;
+
+    $url = $routes[$name][1] ?? '';
+
+    if(!empty($params)) {
+        $arReplace = [];
+        foreach ($params as $key => $value) {
+            $arReplace['<' . $key . '>'] = $value;
+        }
+        if(!empty($arReplace)) {
+            $url = str_replace(array_keys($arReplace), $arReplace, $url);
+        }
+    }
+    return $url;
+}
+
+
+function printTemplateHtml($template, $arData = []) {
+    $template_path = $_SERVER['DOCUMENT_ROOT'] . '/include/template/' . $template . '.php';
+    if(is_file($template_path)) {
+        include $template_path;
+    }
+}
+
+
+function includeBlock($block) {
+    $block_path = $_SERVER['DOCUMENT_ROOT'] . '/include/blocks/' . $block . '.php';
+    if(is_file($block_path)) {
+        include $block_path;
+    }
+}

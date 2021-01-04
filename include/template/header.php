@@ -1,7 +1,3 @@
-<?php
-session_start();
-include $_SERVER['DOCUMENT_ROOT'] . '/include/core/functions.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

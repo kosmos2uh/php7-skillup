@@ -1,0 +1,2 @@
+<?php
+printTemplateHtml('contacts/index');
