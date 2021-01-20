@@ -63,7 +63,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="<?php echo url('admin_categories'); ?>" class="nav-link">
                             <i class="nav-icon fas fa-folder"></i>
                             <p>Категории</p>
                         </a>

@@ -8,9 +8,9 @@ $(document).ready(function(){
         });
     });
 
-    $('#modal-delete-user').on('show.bs.modal', function (event) {
+    $('#modal-delete-item').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
-        $("#modal-delete-user-text").html(button.data('message'));
+        $("#modal-delete-item-text").html(button.data('message'));
     });
 
 });

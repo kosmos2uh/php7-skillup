@@ -1,14 +1,7 @@
 <?php
 
-/*$_SESSION = [
-    'user' => [
-        'name' => '',
-        'auth' => '',
-    ],
-];*/
-
 if(!isAuthorizedUser()) {
-    header("Location: /auth.php", true, 301);
+    header("Location: " . url('auth'), true, 301);
 }
 
 ?>

@@ -11,15 +11,25 @@ $routes = [
     'contacts' => ['/contacts/', '/contacts/', 'contacts/index'],
     'contacts_send_form' => ['/contacts/send/', '/contacts/send/', 'contacts/send'],
 
+    'login' => ['/auth/', '/auth/', 'auth'],
+    'logout' => ['/logout/', '/logout/', 'logout'],
+    'profile' => ['/profile/', '/profile/', 'profile'],
+
     'admin_users' => ['/admin/users/', '/admin/users/', 'admin/users/list'],
     'admin_users_add' => ['/admin/users/add/', '/admin/users/add/', 'admin/users/add'],
     'admin_users_edit' => ['/admin/users/edit/([0-9]+)/', '/admin/users/edit/<id>/', 'admin/users/edit'],
     'admin_users_delete' => ['/admin/users/delete/([0-9]+)/', '/admin/users/delete/<id>/', 'admin/users/delete'],
+
+    'admin_categories' => ['/admin/categories/', '/admin/categories/', 'admin/categories/list'],
+    'admin_categories_add' => ['/admin/categories/add/', '/admin/categories/add/', 'admin/categories/add'],
+    'admin_categories_edit' => ['/admin/categories/edit/([0-9]+)/', '/admin/categories/edit/<id>/', 'admin/categories/edit'],
+    'admin_categories_delete' => ['/admin/categories/delete/([0-9]+)/', '/admin/categories/delete/<id>/', 'admin/categories/delete'],
 ];
 
 // роуты, для которых не нужны шапка и подвал
 $arRoutesWithoutHeaderAndFooter = [
     'contacts_send_form',
+    'logout',
     'admin_users_delete',
 ];
 
@@ -40,9 +50,14 @@ $need_header_and_footer = !in_array($arRoute['name'], $arRoutesWithoutHeaderAndF
 
 $header_template = 'header';
 $footer_template = 'footer';
-if(strpos($arRoute['name'], 'admin_') === 0) {
+if(isAdminRoute()) {
     $header_template = 'admin/header';
     $footer_template = 'admin/footer';
+
+    if(!isAdminUser()) {
+        header("Location: " . url('main_page'));
+        exit;
+    }
 }
 
 if($need_header_and_footer) {

@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-12">
-                <h1>Пользователи</h1>
+                <h1>Категории</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -15,13 +15,13 @@
 
         <div class="row mb-3 mt-n5">
             <div class="col col-sm-12">
-                <a href="<?php echo url('admin_users_add'); ?>" class="btn btn-info float-right"><i class="fas fa-user-plus"></i> добавить нового пользователя</a>
+                <a href="<?php echo url('admin_categories_add'); ?>" class="btn btn-info float-right"><i class="fas fa-folder-plus"></i> добавить категорию</a>
             </div>
         </div>
 
         <?php if(empty($arData)) { ?>
             <div class="alert alert-info">
-                <i class="icon fas fa-info"></i> Пользователей нет!
+                <i class="icon fas fa-info"></i> Категорий нет!
             </div>
         <?php } else { ?>
             <div class="card">
@@ -30,24 +30,22 @@
                         <thead>
                         <tr>
                             <th style="width: 10px">ID</th>
-                            <th>Имя</th>
-                            <th>Email</th>
-                            <th>Администратор</th>
+                            <th>Название</th>
+                            <th>Parent ID</th>
                             <th style="width: 230px"></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($arData as $arUser) { ?>
+                        <?php foreach ($arData as $arItem) { ?>
                         <tr>
-                            <td><?php echo $arUser['id']; ?></td>
-                            <td><?php echo $arUser['name']; ?></td>
-                            <td><?php echo $arUser['email']; ?></td>
-                            <td><?php if($arUser['is_admin'] == 1) { ?><span class="badge bg-primary">admin</span><?php } ?></td>
+                            <td><?php echo $arItem['id']; ?></td>
+                            <td><?php echo $arItem['name']; ?></td>
+                            <td><?php echo $arItem['parent_id']; ?></td>
                             <td class="text-right">
-                                <form method="post" action="<?php echo url('admin_users_delete', ['id' => $arUser['id']]); ?>">
-                                    <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить пользователя <b><?php echo $arUser['name']; ?></b> [<?php echo $arUser['email']; ?>]?"><i class="fas fa-trash"></i> удалить</button>
+                                <form method="post" action="<?php echo url('admin_categories_delete', ['id' => $arItem['id']]); ?>">
+                                    <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить категорию <b><?php echo $arItem['name']; ?></b> [<?php echo $arItem['id']; ?>]?"><i class="fas fa-trash"></i> удалить</button>
                                 </form>
-                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_users_edit', ['id' => $arUser['id']]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
+                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_categories_edit', ['id' => $arItem['id']]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
                             </td>
                         </tr>
                         <?php } ?>
@@ -61,13 +59,13 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Удалить пользователя?</h4>
+                            <h4 class="modal-title">Удалить категорию?</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p id="modal-delete-user-item">Удалить пользователя?</p>
+                            <p id="modal-delete-item-text">Удалить категорию?</p>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
