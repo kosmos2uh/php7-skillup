@@ -5,7 +5,7 @@
     <a class="nav-link" href="/info.php">Info</a>
     <a class="nav-link" href="<?php echo url('contacts'); ?>">Contacts</a>
     <?php if(isAuthorizedUser()) { ?>
-        <a class="nav-link fw-bold" href="/profile.php"><?php echo $_SESSION['user']['name']; ?></a>
+        <a class="nav-link fw-bold" href="<?php echo url('profile'); ?>"><?php echo $_SESSION['user']['name']; ?></a>
         <a class="nav-link" href="<?php echo url('logout'); ?>">[Logout]</a>
     <?php } else { ?>
         <a class="nav-link" href="<?php echo url('login'); ?>">Profile</a>
