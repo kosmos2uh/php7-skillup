@@ -43,26 +43,31 @@ function getPhotoNews($limit = 6) : array {
 }
 
 function isAuthorizedUser(): bool {
-    return isset($_SESSION['user']['auth']) && $_SESSION['user']['auth'] == 1;
+    return isset($_SESSION['user']['id']) && $_SESSION['user']['id'] > 0;
 }
 
 function loginUser($email, $password): bool {
 
     $result = false;
 
-    $email_user = 'user@gmail.com';
-    $password_user = '123456';
+    $link = db_connect();
 
-    if($email == $email_user && $password == $password_user) {
-
-        $_SESSION = [
-            'user' => [
-                'name' => 'Константин',
-                'auth' => 1,
-            ],
-        ];
-
-        $result = true;
+    $query = "SELECT id, name, email, password FROM users WHERE email = ? LIMIT 1";
+    $stmt = mysqli_prepare($link, $query);
+    mysqli_stmt_bind_param($stmt, 's', $email);
+    $res = mysqli_stmt_get_result($stmt);
+    if ($row = mysqli_fetch_assoc($res)) {
+        $hash = $row['password'];
+        if(password_verify($password, $hash)) {
+            $_SESSION = [
+                'user' => [
+                    'id' => $row['id'],
+                    'name' => $row['name'],
+                    'email' => $row['email'],
+                ],
+            ];
+            $result = true;
+        }
     }
 
     return $result;
@@ -133,6 +138,9 @@ function url($name, $params = []) {
 
 
 function printTemplateHtml($template, $arData = []) {
+    /*global $smarty;
+    $smarty->assign('arData', $arData);
+    $smarty->display($template . '.tpl');*/
     $template_path = $_SERVER['DOCUMENT_ROOT'] . '/include/template/' . $template . '.php';
     if(is_file($template_path)) {
         include $template_path;
@@ -145,4 +153,77 @@ function includeBlock($block) {
     if(is_file($block_path)) {
         include $block_path;
     }
+}
+
+
+function db_connect() {
+    $link = mysqli_connect('localhost', 'root', '', 'skillup');
+    if (mysqli_connect_errno()) {
+        echo "Не удалось подключиться к MySQL: " . mysqli_connect_error();
+        exit;
+    }
+    return $link;
+}
+
+function getUserList() {
+    $link = db_connect();
+    $query = "SELECT id, name, email, password, age, gender, is_admin FROM users ORDER BY id DESC";
+    $result = mysqli_query($link, $query);
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+
+function getUserItem(int $id) {
+    $arUser = [];
+    $link = db_connect();
+    $query = "SELECT id, name, email, password, age, gender, is_admin FROM users WHERE id = " . $id;
+    $result = mysqli_query($link, $query);
+    if($row = mysqli_fetch_assoc($result)) {
+        $arUser = $row;
+    }
+    return $arUser;
+}
+
+
+function updateUser(int $id, string $name, string $email, int $is_admin, string $password = '') {
+    $link = db_connect();
+    $query = "
+        UPDATE users
+        SET
+            name = '" . $name . "',
+            email = '" . $email . "',
+            is_admin = " . $is_admin . "
+        WHERE id = {$id}
+    ";
+    $result = mysqli_query($link, $query);
+    if($password != '') {
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $query = "UPDATE users SET password = '" . $hash . "' WHERE id = {$id}";
+        mysqli_query($link, $query);
+    }
+    return (bool)$result;
+}
+
+
+function addUser(string $name, string $email, int $is_admin, string $password) {
+    $link = db_connect();
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    $query = "
+        INSERT INTO users
+        SET
+            name = '" . $name . "',
+            email = '" . $email . "',
+            is_admin = " . $is_admin . ",
+            password = '" . $hash . "'
+    ";
+    $result = mysqli_query($link, $query);
+    return (bool)$result;
+}
+
+
+function deleteUser(int $id) {
+    $link = db_connect();
+    $query = "DELETE FROM users WHERE id = {$id}";
+    $result = mysqli_query($link, $query);
+    return (bool)$result;
 }
