@@ -307,6 +307,57 @@ function getCategoriesList() {
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
+function getCategoryItem(int $id) {
+    $arData = [];
+    $link = db_connect();
+    $query = "SELECT id, name, parent_id FROM categories WHERE id = " . $id;
+    $result = mysqli_query($link, $query);
+    if($row = mysqli_fetch_assoc($result)) {
+        $arData = $row;
+    }
+    return $arData;
+}
+
+
+function updateCategory(int $id, string $name, int $parent_id) {
+    $link = db_connect();
+    $query = "
+        UPDATE categories
+        SET
+            name = '" . $name . "',
+            parent_id = " . ($parent_id > 0 ? $parent_id : 'NULL') . "
+        WHERE id = {$id}
+    ";
+    $result = mysqli_query($link, $query);
+    return (bool)$result;
+}
+
+
+function addCategory(string $name, int $parent_id) {
+    if($image = saveEntityImage('category', 'image') || 1) {
+        $link = db_connect();
+        $query = "
+            INSERT INTO categories
+            SET
+                name = '" . $name . "',
+                parent_id = " . ($parent_id > 0 ? $parent_id : 'NULL') . ",
+                image = '" . $image . "'
+        ";
+        if(!($result = mysqli_query($link, $query))) {
+            deleteEntityImage('category', $image);
+        }
+    }
+    return (bool)$result;
+}
+
+
+function deleteCategory(int $id) {
+    $link = db_connect();
+    $query = "DELETE FROM categories WHERE id = {$id}";
+    $result = mysqli_query($link, $query);
+    return (bool)$result;
+}
+
 function getCategoriesTree($parent_id = 0, $max_level = 0, $current_level = 0) {
     $arCategories = getCategoriesList();
     $arResult = [];
@@ -336,55 +387,17 @@ function getCategoriesListStructured($parent_id = 0, $max_level = 0, $current_le
     return $arResult;
 }
 
-function getCategoryItem(int $id) {
-    $arData = [];
-    $link = db_connect();
-    $query = "SELECT id, name, parent_id FROM categories WHERE id = " . $id;
-    $result = mysqli_query($link, $query);
-    if($row = mysqli_fetch_assoc($result)) {
-        $arData = $row;
-    }
-    return $arData;
-}
-
-
-function updateCategory(int $id, string $name, int $parent_id) {
+function getCategoriesByRecipe(int $recipe_id) {
     $link = db_connect();
     $query = "
-        UPDATE categories
-        SET
-            name = '" . $name . "',
-            parent_id = " . ($parent_id > 0 ? $parent_id : 'NULL') . "
-        WHERE id = {$id}
+        SELECT c.id, c.name, c.parent_id
+        FROM recipes_categories rc
+        LEFT JOIN categories c on rc.category_id = c.id
+        WHERE rc.recipe_id = {$recipe_id}
+        ORDER BY c.id
     ";
     $result = mysqli_query($link, $query);
-    return (bool)$result;
-}
-
-
-function addCategory(string $name, int $parent_id) {
-    if($image = saveEntityImage('category', 'image')) {
-        $link = db_connect();
-        $query = "
-            INSERT INTO categories
-            SET
-                name = '" . $name . "',
-                parent_id = " . ($parent_id > 0 ? $parent_id : 'NULL') . ",
-                image = '" . $image . "'
-        ";
-        if(!($result = mysqli_query($link, $query))) {
-            deleteEntityImage('category', $image);
-        }
-    }
-    return (bool)$result;
-}
-
-
-function deleteCategory(int $id) {
-    $link = db_connect();
-    $query = "DELETE FROM categories WHERE id = {$id}";
-    $result = mysqli_query($link, $query);
-    return (bool)$result;
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 /* CATEGORIES END */
 
@@ -404,6 +417,21 @@ function getIngredientItem(int $id) {
     $result = mysqli_query($link, $query);
     if($row = mysqli_fetch_assoc($result)) {
         $arData = $row;
+    }
+    return $arData;
+}
+
+function getIngredientsByRecipe(int $recipe_id) {
+    $arData = [];
+    $link = db_connect();
+    $query = "
+        SELECT i.id, i.name
+        FROM recipes_ingredients ri
+        LEFT JOIN ingredients i ON ri.ingredient_id = i.id
+        WHERE ri.recipe_id = " . $recipe_id;
+    $result = mysqli_query($link, $query);
+    while($row = mysqli_fetch_assoc($result)) {
+        $arData[] = $row;
     }
     return $arData;
 }
@@ -445,7 +473,12 @@ function deleteIngredient(int $id) {
 /* RECIPES */
 function getRecipesList() {
     $link = db_connect();
-    $query = "SELECT id, name, description, image, user_id, date FROM recipes ORDER BY id DESC";
+    $query = "
+        SELECT r.id, r.name, r.description, r.image, r.user_id, r.date, u.name as user_name
+        FROM recipes r
+        LEFT JOIN users u on r.user_id = u.id
+        ORDER BY r.id DESC
+    ";
     $result = mysqli_query($link, $query);
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
@@ -454,16 +487,30 @@ function getRecipesList() {
 function getRecipeItem(int $id) {
     $arData = [];
     $link = db_connect();
-    $query = "SELECT id, name, description, image, user_id, date FROM recipes WHERE id = " . $id;
+    $query = "
+        SELECT
+            r.id,
+            r.name,
+            r.description,
+            r.image,
+            r.user_id,
+            r.date,
+            u.name as user_name
+        FROM recipes r
+        LEFT JOIN users u on r.user_id = u.id
+        WHERE r.id = " . $id . "
+    ";
     $result = mysqli_query($link, $query);
     if($row = mysqli_fetch_assoc($result)) {
         $arData = $row;
+        $arData['ingredients'] = getIngredientsByRecipe($arData['id']);
+        $arData['categories'] = getCategoriesByRecipe($arData['id']);
     }
     return $arData;
 }
 
 
-function updateRecipe(int $id, string $name, string $description, int $user_id, string $date) {
+function updateRecipe(int $id, string $name, string $description, int $user_id, string $date, array $arIngredients = [], array $arCategories = []) {
     $link = db_connect();
     $query = "
         UPDATE recipes
@@ -475,11 +522,47 @@ function updateRecipe(int $id, string $name, string $description, int $user_id, 
         WHERE id = {$id}
     ";
     $result = mysqli_query($link, $query);
+    if($result) {
+
+        $query = "DELETE FROM recipes_ingredients WHERE recipe_id = {$id}";
+        mysqli_query($link, $query);
+
+        if(!empty($arIngredients)) {
+            $values = '';
+            foreach ($arIngredients as $ingredient_id) {
+                $values .= $values != '' ? ',' : '';
+                $values .= "({$id}, {$ingredient_id})";
+            }
+
+            $query = "
+                INSERT INTO recipes_ingredients (recipe_id, ingredient_id)
+                VALUES {$values}
+            ";
+            mysqli_query($link, $query);
+        }
+
+        $query = "DELETE FROM recipes_categories WHERE recipe_id = {$id}";
+        mysqli_query($link, $query);
+
+        if(!empty($arCategories)) {
+            $values = '';
+            foreach ($arCategories as $category_id) {
+                $values .= $values != '' ? ',' : '';
+                $values .= "({$id}, {$category_id})";
+            }
+
+            $query = "
+                INSERT INTO recipes_categories (recipe_id, category_id)
+                VALUES {$values}
+            ";
+            mysqli_query($link, $query);
+        }
+    }
     return (bool)$result;
 }
 
 
-function addRecipe(string $name, string $description, int $user_id, string $date) {
+function addRecipe(string $name, string $description, int $user_id, string $date, array $arIngredients = [], array $arCategories = []) {
     $link = db_connect();
     $query = "
         INSERT INTO recipes
@@ -490,9 +573,42 @@ function addRecipe(string $name, string $description, int $user_id, string $date
             date = '{$date}'
     ";
     $result = mysqli_query($link, $query);
+    if($result) {
+        $recipe_id = mysqli_insert_id($link);
+        if($recipe_id > 0) {
+
+            if(!empty($arIngredients)) {
+                $values = '';
+                foreach ($arIngredients as $ingredient_id) {
+                    $values .= $values != '' ? ',' : '';
+                    $values .= "({$recipe_id}, {$ingredient_id})";
+                }
+
+                $query = "
+                    INSERT INTO recipes_ingredients (recipe_id, ingredient_id)
+                    VALUES {$values}
+                ";
+                mysqli_query($link, $query);
+            }
+
+            if(!empty($arCategories)) {
+                $values = '';
+                foreach ($arCategories as $category_id) {
+                    $values .= $values != '' ? ',' : '';
+                    $values .= "({$recipe_id}, {$category_id})";
+                }
+
+                $query = "
+                    INSERT INTO recipes_categories (recipe_id, category_id)
+                    VALUES {$values}
+                ";
+                mysqli_query($link, $query);
+            }
+
+        }
+    }
     return (bool)$result;
 }
-
 
 function deleteRecipe(int $id) {
     $link = db_connect();

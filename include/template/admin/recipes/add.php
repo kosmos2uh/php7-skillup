@@ -30,6 +30,31 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Ингредиенты</label>
+                        <div class="col-sm-10">
+                            <select name="ingredients[]" class="form-control select2    " multiple="multiple">
+                                <?php foreach ($arData['ingredients_list'] as $arIngredient) { ?>
+                                    <option value="<?php echo $arIngredient['id']; ?>"><?php echo $arIngredient['name']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Категории</label>
+                        <div class="col-sm-10">
+                            <select name="categories[]" class="form-control select2" multiple="multiple">
+                                <?php foreach ($arData['categories_list'] as $arCategory) { ?>
+                                    <option value="<?php echo $arCategory['id']; ?>"><?php
+                                        for($i = 0; $i <= $arCategory['level']; $i++) {
+                                            echo '&ndash; &ndash; ';
+                                        }
+                                        echo $arCategory['name'];
+                                        ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Описание</label>
                         <div class="col-sm-10">
                             <textarea name="description" class="form-control" id="summernote" required><?php echo $arData['description'] ?? ''; ?></textarea>

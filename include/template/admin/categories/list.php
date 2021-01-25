@@ -39,7 +39,12 @@
                         <?php foreach ($arData as $arItem) { ?>
                         <tr>
                             <td><?php echo $arItem['id']; ?></td>
-                            <td><?php echo $arItem['name']; ?></td>
+                            <td><?php
+                                for($i = 0; $i < $arItem['level']; $i++) {
+                                    echo '&mdash; &mdash; ';
+                                }
+                                echo $arItem['name'];
+                                ?></td>
                             <td><?php echo $arItem['parent_id']; ?></td>
                             <td class="text-right">
                                 <form method="post" action="<?php echo url('admin_categories_delete', ['id' => $arItem['id']]); ?>">

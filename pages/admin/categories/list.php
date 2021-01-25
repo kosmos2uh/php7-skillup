@@ -1,3 +1,3 @@
 <?php
-$arCategories = getCategoriesList();
+$arCategories = getCategoriesListStructured();
 printTemplateHtml('admin/categories/list', $arCategories);

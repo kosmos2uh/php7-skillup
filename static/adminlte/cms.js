@@ -23,10 +23,10 @@ $(document).ready(function(){
     //     label.text(files_names);
     // });
 
-    // $('#summernote').summernote({
-    //     height: 200
-    // });
+    $('#summernote').summernote({
+        height: 200
+    });
 
-    // $('.select2').select2();
+    $('.select2').select2();
 
 });

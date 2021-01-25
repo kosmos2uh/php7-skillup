@@ -10,7 +10,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/static/adminlte/plugins/fontawesome-free/css/all.min.css">
     <!-- summernote -->
-<!--    <link rel="stylesheet" href="/static/adminlte/plugins/summernote/summernote-bs4.min.css">-->
+    <link rel="stylesheet" href="/static/adminlte/plugins/summernote/summernote-bs4.min.css">
     <!-- Select2 -->
     <link rel="stylesheet" href="/static/adminlte/plugins/select2/css/select2.min.css">
     <!-- Theme style -->

@@ -26,7 +26,17 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Родитель</label>
                         <div class="col-sm-10">
-                            <input type="text" name="parent_id" value="<?php echo $arData['parent_id'] ?? ''; ?>" class="form-control" pattern="^[0-9]+$">
+                            <select name="parent_id" class="form-control">
+                                <option value="">Верхний уровень</option>
+                                <?php foreach ($arData['categories_all'] as $arCategory) { ?>
+                                    <option value="<?php echo $arCategory['id']; ?>"<?php if(($arData['parent_id'] ?? '') == $arCategory['id']) { ?> selected="selected" <?php } ?>><?php
+                                        for($i = 0; $i <= $arCategory['level']; $i++) {
+                                            echo '&ndash; &ndash; ';
+                                        }
+                                        echo $arCategory['name'];
+                                        ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">

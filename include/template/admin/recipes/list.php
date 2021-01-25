@@ -41,7 +41,14 @@
                         <tr>
                             <td><?php echo $arItem['id']; ?></td>
                             <td><?php echo $arItem['name']; ?></td>
-                            <td><?php echo $arItem['user_id']; ?></td>
+                            <td>
+                                <?php if($arItem['user_id'] > 0) { ?>
+                                    <a href="<?php echo url('admin_users_edit', ['id' => $arItem['user_id']]); ?>" target="_blank">
+                                        [<?php echo $arItem['user_id']; ?>]
+                                    </a>
+                                    <?php echo $arItem['user_name']; ?>
+                                <?php } ?>
+                            </td>
                             <td><?php echo date('d.m.Y', strtotime($arItem['date'])); ?></td>
                             <td class="text-right">
                                 <form method="post" action="<?php echo url('admin_recipes_delete', ['id' => $arItem['id']]); ?>">
