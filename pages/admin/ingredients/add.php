@@ -5,4 +5,4 @@ if(!empty($_POST)) {
     $arData = $_POST;
 }
 
-printTemplateHtml('admin/categories/add', $arData);
+printTemplateHtml('admin/ingredients/add', $arData);

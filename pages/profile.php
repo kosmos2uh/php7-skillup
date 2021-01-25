@@ -1,7 +1,7 @@
 <?php
 
 if(!isAuthorizedUser()) {
-    header("Location: " . url('auth'), true, 301);
+    redirect(url('auth'));
 }
 
 ?>

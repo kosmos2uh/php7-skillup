@@ -2,4 +2,4 @@
 
 logoutUser();
 
-header("Location: /", true, 301);
+redirect(url('main_page'));

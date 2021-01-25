@@ -3,15 +3,14 @@
 $error = false;
 
 if(isAuthorizedUser()) {
-    header("Location: " . url('profile'), true, 301);
+    redirect(url('profile'));
 }
 
 $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
 
 if(!empty($_POST) && loginUser($email, $password)) {
-    header("Location: " . url('profile'), true, 301);
-    exit;
+    redirect(url('profile'));
 } elseif(isset($_POST['email'])) {
     $error = 'Неверная почта или пароль';
 }

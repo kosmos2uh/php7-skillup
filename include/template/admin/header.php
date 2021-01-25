@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/static/adminlte/plugins/fontawesome-free/css/all.min.css">
+    <!-- summernote -->
+<!--    <link rel="stylesheet" href="/static/adminlte/plugins/summernote/summernote-bs4.min.css">-->
+    <!-- Select2 -->
+    <link rel="stylesheet" href="/static/adminlte/plugins/select2/css/select2.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/static/adminlte/dist/css/adminlte.min.css">
 </head>
@@ -57,6 +61,12 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
+                        <a href="<?php echo url('admin_recipes'); ?>" class="nav-link">
+                            <i class="nav-icon fas fa-concierge-bell"></i>
+                            <p>Рецепты</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="<?php echo url('admin_users'); ?>" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
                             <p>Пользователи</p>
@@ -66,6 +76,12 @@
                         <a href="<?php echo url('admin_categories'); ?>" class="nav-link">
                             <i class="nav-icon fas fa-folder"></i>
                             <p>Категории</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo url('admin_ingredients'); ?>" class="nav-link">
+                            <i class="nav-icon fas fa-cheese"></i>
+                            <p>Ингредиенты</p>
                         </a>
                     </li>
                 </ul>

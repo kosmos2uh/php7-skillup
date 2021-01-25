@@ -33,4 +33,4 @@ if(!empty($_POST)) {
 
 }
 
-header("Location: " . url('contacts'));
+redirect(url('contacts'));
