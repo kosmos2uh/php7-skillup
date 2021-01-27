@@ -8,12 +8,12 @@
         </div>
     </div><!-- /.container-fluid -->
 </section>
-
+<?php /** @var \App\Entity\Ingredient $ingredient */ $ingredient = $arData; ?>
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
 
-        <?php if(empty($arData)) { ?>
+        <?php if($ingredient->id == 0) { ?>
             <div class="alert alert-danger">
                 <i class="icon fas fa-ban"></i> Ингредиент не найден!
             </div>
@@ -25,7 +25,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Название</label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" value="<?php echo $arData['name']; ?>" class="form-control" required>
+                                <input type="text" name="name" value="<?php echo $_POST['name'] ?? $ingredient->name; ?>" class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                         <button type="submit" class="btn btn-primary float-right">Сохранить</button>
                     </div>
                     <!-- /.card-footer -->
-                    <input type="hidden" name="id" value="<?php echo $arData['id']; ?>">
+                    <input type="hidden" name="id" value="<?php echo $ingredient->id; ?>">
                 </form>
             </div>
         <?php }  ?>

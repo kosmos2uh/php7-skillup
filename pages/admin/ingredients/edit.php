@@ -1,8 +1,7 @@
 <?php
-$arData = getIngredientItem($arRoute['param']['id'] ?? 0);
 
-if(!empty($_POST)) {
-    $arData = $_POST;
-}
+use App\Entity\Ingredient;
 
-printTemplateHtml('admin/ingredients/edit', $arData);
+$ingredient = new Ingredient($arRoute['param']['id'] ?? 0);
+
+printTemplateHtml('admin/ingredients/edit', $ingredient);

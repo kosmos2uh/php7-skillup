@@ -35,15 +35,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($arData as $arItem) { ?>
+                        <?php foreach ($arData as /** @var \App\Entity\Ingredient $item */ $item) { ?>
                         <tr>
-                            <td><?php echo $arItem['id']; ?></td>
-                            <td><?php echo $arItem['name']; ?></td>
+                            <td><?php echo $item->id; ?></td>
+                            <td><?php echo $item->name; ?></td>
                             <td class="text-right">
-                                <form method="post" action="<?php echo url('admin_ingredients_delete', ['id' => $arItem['id']]); ?>">
-                                    <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить ингредиент <b><?php echo $arItem['name']; ?></b> [<?php echo $arItem['id']; ?>]?"><i class="fas fa-trash"></i> удалить</button>
+                                <form method="post" action="<?php echo url('admin_ingredients_delete', ['id' => $item->id]); ?>">
+                                    <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить ингредиент <b><?php echo $item->name; ?></b> [<?php echo $item->id; ?>]?"><i class="fas fa-trash"></i> удалить</button>
                                 </form>
-                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_ingredients_edit', ['id' => $arItem['id']]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
+                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_ingredients_edit', ['id' => $item->id]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
                             </td>
                         </tr>
                         <?php } ?>

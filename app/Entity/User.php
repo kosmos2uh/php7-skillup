@@ -20,7 +20,7 @@ class User
     public static function getList(): array
     {
         $link = db_connect();
-        $arUsers = [];
+        $arItems = [];
         $query = "SELECT id, name, email, password, is_admin FROM users ORDER BY id DESC";
         $result = mysqli_query($link, $query);
         while ($row = mysqli_fetch_assoc($result)) {
@@ -30,9 +30,9 @@ class User
             $user->email = $row['email'];
             $user->password = $row['password'];
             $user->is_admin = $row['is_admin'];
-            $arUsers[] = $user;
+            $arItems[] = $user;
         }
-        return $arUsers;
+        return $arItems;
     }
 
     private function get(int $id) {
