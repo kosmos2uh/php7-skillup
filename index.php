@@ -3,6 +3,9 @@
 session_start();
 
 include $_SERVER['DOCUMENT_ROOT'] . '/include/core/functions.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/app/Autoloader.php';
+
+AutoLoader::register();
 
 $routes = [
     'main_page' => ['/', '/', 'index'],

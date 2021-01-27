@@ -1,4 +1,5 @@
 <?php
-$id = intval($arRoute['param']['id'] ?? 0);
-$result = deleteUser($id);
+
+$user = new \App\Entity\User($arRoute['param']['id'] ?? 0);
+$user->delete();
 redirect(url('admin_users'));

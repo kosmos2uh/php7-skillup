@@ -37,17 +37,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($arData as $arUser) { ?>
+                        <?php foreach ($arData as /** @var \App\Entity\User $user */ $user) { ?>
                         <tr>
-                            <td><?php echo $arUser['id']; ?></td>
-                            <td><?php echo $arUser['name']; ?></td>
-                            <td><?php echo $arUser['email']; ?></td>
-                            <td><?php if($arUser['is_admin'] == 1) { ?><span class="badge bg-primary">admin</span><?php } ?></td>
+                            <td><?php echo $user->id; ?></td>
+                            <td><?php echo $user->name; ?></td>
+                            <td><?php echo $user->email; ?></td>
+                            <td><?php if($user->is_admin == 1) { ?><span class="badge bg-primary">admin</span><?php } ?></td>
                             <td class="text-right">
-                                <form method="post" action="<?php echo url('admin_users_delete', ['id' => $arUser['id']]); ?>">
-                                    <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить пользователя <b><?php echo $arUser['name']; ?></b> [<?php echo $arUser['email']; ?>]?"><i class="fas fa-trash"></i> удалить</button>
+                                <form method="post" action="<?php echo url('admin_users_delete', ['id' => $user->id]); ?>">
+                                    <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить пользователя <b><?php echo $user->name; ?></b> [<?php echo $user->email; ?>]?"><i class="fas fa-trash"></i> удалить</button>
                                 </form>
-                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_users_edit', ['id' => $arUser['id']]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
+                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_users_edit', ['id' => $user->id]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
                             </td>
                         </tr>
                         <?php } ?>

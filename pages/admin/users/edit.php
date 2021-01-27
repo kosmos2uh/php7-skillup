@@ -1,8 +1,7 @@
 <?php
-$arUser = getUserItem($arRoute['param']['id'] ?? 0);
 
-if(!empty($_POST)) {
-    $arUser = $_POST;
-}
+use App\Entity\User;
 
-printTemplateHtml('admin/users/edit', $arUser);
+$user = new User($arRoute['param']['id'] ?? 0);
+
+printTemplateHtml('admin/users/edit', $user);

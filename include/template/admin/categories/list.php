@@ -30,6 +30,7 @@
                         <thead>
                         <tr>
                             <th style="width: 10px">ID</th>
+                            <th>Картинка</th>
                             <th>Название</th>
                             <th>Parent ID</th>
                             <th style="width: 230px"></th>
@@ -39,6 +40,11 @@
                         <?php foreach ($arData as $arItem) { ?>
                         <tr>
                             <td><?php echo $arItem['id']; ?></td>
+                            <td>
+                                <?php if($arItem['image'] != '') { ?>
+                                    <img src="<?php echo getEntityImage('category', $arItem['image']); ?>" alt="" style="width: 100px" />
+                                <?php } ?>
+                            </td>
                             <td><?php
                                 for($i = 0; $i < $arItem['level']; $i++) {
                                     echo '&mdash; &mdash; ';

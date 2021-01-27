@@ -1,3 +1,5 @@
 <?php
-$arUsers = getUserList();
+use App\Entity\User;
+
+$arUsers = User::getList();
 printTemplateHtml('admin/users/list', $arUsers);

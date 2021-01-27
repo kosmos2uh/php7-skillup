@@ -13,15 +13,15 @@ $(document).ready(function(){
         $("#modal-delete-item-text").html(button.data('message'));
     });
 
-    // $(".custom-file-input").change(function(e){
-    //     var label = $("+.custom-file-label", this);
-    //     var files = e.target.files;
-    //     var files_names = '';
-    //     for (var i = 0; i < files.length; i++) {
-    //         files_names += (files_names !== '' ? ', ' : '') + files[i].name;
-    //     }
-    //     label.text(files_names);
-    // });
+    $(".custom-file-input").change(function(e){
+        var label = $("+.custom-file-label", this);
+        var files = e.target.files;
+        var files_names = '';
+        for (var i = 0; i < files.length; i++) {
+            files_names += (files_names !== '' ? ', ' : '') + files[i].name;
+        }
+        label.text(files_names);
+    });
 
     $('#summernote').summernote({
         height: 200

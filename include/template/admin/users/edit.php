@@ -8,12 +8,12 @@
         </div>
     </div><!-- /.container-fluid -->
 </section>
-
+<?php /** @var \App\Entity\User $user */ $user = $arData; ?>
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
 
-        <?php if(empty($arData)) { ?>
+        <?php if($user->id == 0) { ?>
             <div class="alert alert-danger">
                 <i class="icon fas fa-ban"></i> Пользователь не найден!
             </div>
@@ -25,13 +25,13 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Имя</label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" value="<?php echo $arData['name']; ?>" class="form-control" required>
+                                <input type="text" name="name" value="<?php echo $_POST['name'] ?? $user->name; ?>" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-10">
-                                <input type="email" name="email" value="<?php echo $arData['email']; ?>" class="form-control" required>
+                                <input type="email" name="email" value="<?php echo $_POST['email'] ?? $user->email; ?>" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -43,7 +43,7 @@
                         <div class="form-group row">
                             <div class="offset-sm-2 col-sm-10">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="is_admin" id="is_admin" value="1" <?php if($arData['is_admin'] == 1) { ?>checked="checked"<?php } ?>>
+                                    <input type="checkbox" class="form-check-input" name="is_admin" id="is_admin" value="1"<?php if(($_POST['is_admin'] ?? $user->is_admin) == 1) { ?> checked="checked"<?php } ?>>
                                     <label class="form-check-label" for="is_admin">Администратор</label>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                         <button type="submit" class="btn btn-primary float-right">Сохранить</button>
                     </div>
                     <!-- /.card-footer -->
-                    <input type="hidden" name="id" value="<?php echo $arData['id']; ?>">
+                    <input type="hidden" name="id" value="<?php echo $user->id; ?>">
                 </form>
             </div>
         <?php }  ?>

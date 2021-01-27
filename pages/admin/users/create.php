@@ -1,5 +1,7 @@
 <?php
 
+use App\Entity\User;
+
 if(!empty($_POST)) {
     $name = trim($_POST['name'] ?? '');
     $email = trim($_POST['email'] ?? '');
@@ -7,8 +9,12 @@ if(!empty($_POST)) {
     $password = trim($_POST['password'] ?? '');
 
     if($name != '' && $email != '' && $password != '') {
-        $result = addUser($name, $email, $is_admin, $password);
-        if($result == true) {
+        $user = new User();
+        $user->name = $name;
+        $user->email = $email;
+        $user->password = $password;
+        $user->is_admin = $is_admin;
+        if($user->add()) {
             redirect(url('admin_users'));
         } else {
             redirect(url('admin_users_add'), 307);

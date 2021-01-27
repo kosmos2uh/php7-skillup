@@ -224,7 +224,11 @@ function saveEntityImage($entity, $image_field_name) {
 }
 
 function getEntityImage($entity, $file_name) {
-    return $_SERVER['DOCUMENT_ROOT'] . '/upload/' . $entity . '/' . $file_name;
+    $src = '';
+    if($file_name != '') {
+        $src = '/upload/' . $entity . '/' . $file_name;
+    }
+    return $src;
 }
 
 function deleteEntityImage($entity, $file_name) {
@@ -234,75 +238,10 @@ function deleteEntityImage($entity, $file_name) {
     }
 }
 
-/* USERS */
-function getUserList() {
-    $link = db_connect();
-    $query = "SELECT id, name, email, password, is_admin FROM users ORDER BY id DESC";
-    $result = mysqli_query($link, $query);
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
-
-
-function getUserItem(int $id) {
-    $arUser = [];
-    $link = db_connect();
-    $query = "SELECT id, name, email, password, is_admin FROM users WHERE id = " . $id;
-    $result = mysqli_query($link, $query);
-    if($row = mysqli_fetch_assoc($result)) {
-        $arUser = $row;
-    }
-    return $arUser;
-}
-
-
-function updateUser(int $id, string $name, string $email, int $is_admin, string $password = '') {
-    $link = db_connect();
-    $query = "
-        UPDATE users
-        SET
-            name = '" . $name . "',
-            email = '" . $email . "',
-            is_admin = " . $is_admin . "
-        WHERE id = {$id}
-    ";
-    $result = mysqli_query($link, $query);
-    if($password != '') {
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-        $query = "UPDATE users SET password = '" . $hash . "' WHERE id = {$id}";
-        mysqli_query($link, $query);
-    }
-    return (bool)$result;
-}
-
-
-function addUser(string $name, string $email, int $is_admin, string $password) {
-    $link = db_connect();
-    $hash = password_hash($password, PASSWORD_DEFAULT);
-    $query = "
-        INSERT INTO users
-        SET
-            name = '" . $name . "',
-            email = '" . $email . "',
-            is_admin = " . $is_admin . ",
-            password = '" . $hash . "'
-    ";
-    $result = mysqli_query($link, $query);
-    return (bool)$result;
-}
-
-
-function deleteUser(int $id) {
-    $link = db_connect();
-    $query = "DELETE FROM users WHERE id = {$id}";
-    $result = mysqli_query($link, $query);
-    return (bool)$result;
-}
-/* USERS END */
-
 /* CATEGORIES */
 function getCategoriesList() {
     $link = db_connect();
-    $query = "SELECT id, name, parent_id FROM categories ORDER BY id";
+    $query = "SELECT id, name, parent_id, image FROM categories ORDER BY id";
     $result = mysqli_query($link, $query);
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
@@ -334,7 +273,8 @@ function updateCategory(int $id, string $name, int $parent_id) {
 
 
 function addCategory(string $name, int $parent_id) {
-    if($image = saveEntityImage('category', 'image') || 1) {
+    $result = false;
+    if($image = saveEntityImage('category', 'image')) {
         $link = db_connect();
         $query = "
             INSERT INTO categories
