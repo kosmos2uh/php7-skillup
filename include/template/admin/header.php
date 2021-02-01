@@ -13,10 +13,23 @@
     <link rel="stylesheet" href="/static/adminlte/plugins/summernote/summernote-bs4.min.css">
     <!-- Select2 -->
     <link rel="stylesheet" href="/static/adminlte/plugins/select2/css/select2.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="/static/adminlte/plugins/toastr/toastr.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/static/adminlte/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition sidebar-mini">
+
+<script>
+    var flash_messages = [];
+    <?php
+    $arMessages = \App\Helpers\FlashMessage::get();
+    foreach ($arMessages as $arMessage) {
+        ?>flash_messages.push({type: '<?php echo $arMessage['type']; ?>', text: '<?php echo $arMessage['text']; ?>'});<?php
+    }
+    ?>
+</script>
+
 <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">

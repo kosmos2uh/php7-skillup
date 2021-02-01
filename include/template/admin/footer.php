@@ -17,6 +17,8 @@
 <script src="/static/adminlte/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- Select2 -->
 <script src="/static/adminlte/plugins/select2/js/select2.full.min.js"></script>
+<!-- Toastr -->
+<script src="/static/adminlte/plugins/toastr/toastr.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/adminlte/dist/js/adminlte.min.js"></script>
 <script src="/static/adminlte/cms.js"></script>

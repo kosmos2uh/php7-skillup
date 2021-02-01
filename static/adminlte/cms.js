@@ -29,4 +29,13 @@ $(document).ready(function(){
 
     $('.select2').select2();
 
+    flash_messages.forEach(function (el) {
+        switch (el.type) {
+            case 'info' : toastr.info(el.text); break;
+            case 'success' : toastr.success(el.text); break;
+            case 'error' : toastr.error(el.text); break;
+            case 'warning' : toastr.warning(el.text); break;
+        }
+    });
+
 });
