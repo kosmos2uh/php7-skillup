@@ -232,7 +232,7 @@ function getEntityImage($entity, $file_name) {
 }
 
 function deleteEntityImage($entity, $file_name) {
-    $file_path = getEntityImage($entity, $file_name);
+    $file_path = $_SERVER['DOCUMENT_ROOT'] . getEntityImage($entity, $file_name);
     if(is_file($file_path)) {
         unlink($file_path);
     }
@@ -249,7 +249,7 @@ function getCategoriesList() {
 function getCategoryItem(int $id) {
     $arData = [];
     $link = db_connect();
-    $query = "SELECT id, name, parent_id FROM categories WHERE id = " . $id;
+    $query = "SELECT id, name, parent_id, image FROM categories WHERE id = " . $id;
     $result = mysqli_query($link, $query);
     if($row = mysqli_fetch_assoc($result)) {
         $arData = $row;
@@ -260,14 +260,27 @@ function getCategoryItem(int $id) {
 
 function updateCategory(int $id, string $name, int $parent_id) {
     $link = db_connect();
-    $query = "
-        UPDATE categories
-        SET
-            name = '" . $name . "',
-            parent_id = " . ($parent_id > 0 ? $parent_id : 'NULL') . "
-        WHERE id = {$id}
-    ";
-    $result = mysqli_query($link, $query);
+    $result = false;
+    $arCategory = getCategoryItem($id);
+    if(!empty($arCategory)) {
+        $category_image = $arCategory['image'];
+        if($image = saveEntityImage('category', 'image')) {
+            if(!empty($arCategory['image'])) {
+                deleteEntityImage('category', $category_image);
+            }
+            $category_image = $image;
+        }
+
+        $query = "
+            UPDATE categories
+            SET
+                name = '" . $name . "',
+                parent_id = " . ($parent_id > 0 ? $parent_id : 'NULL') . ",
+                image = '" . $category_image . "'
+            WHERE id = {$id}
+        ";
+        $result = mysqli_query($link, $query);
+    }
     return (bool)$result;
 }
 
@@ -293,8 +306,15 @@ function addCategory(string $name, int $parent_id) {
 
 function deleteCategory(int $id) {
     $link = db_connect();
-    $query = "DELETE FROM categories WHERE id = {$id}";
-    $result = mysqli_query($link, $query);
+    $arCategory = getCategoryItem($id);
+    $result = false;
+    if(!empty($arCategory)) {
+        if(!empty($arCategory['image'])) {
+            deleteEntityImage('category', $arCategory['image']);
+        }
+        $query = "DELETE FROM categories WHERE id = {$id}";
+        $result = mysqli_query($link, $query);
+    }
     return (bool)$result;
 }
 
