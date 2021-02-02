@@ -15,7 +15,7 @@
 
         <div class="row mb-3 mt-n5">
             <div class="col col-sm-12">
-                <a href="<?php echo url('admin_ingredients_add'); ?>" class="btn btn-info float-right"><i class="fas fa-plus"></i> добавить ингредиент</a>
+                <a href="<?php echo url('admin_entity_add', ['entity' => 'ingredients']); ?>" class="btn btn-info float-right"><i class="fas fa-plus"></i> добавить ингредиент</a>
             </div>
         </div>
 
@@ -40,10 +40,10 @@
                             <td><?php echo $item->id; ?></td>
                             <td><?php echo $item->name; ?></td>
                             <td class="text-right">
-                                <form method="post" action="<?php echo url('admin_ingredients_delete', ['id' => $item->id]); ?>">
+                                <form method="post" action="<?php echo url('admin_entity_delete', ['entity' => 'ingredients', 'id' => $item->id]); ?>">
                                     <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить ингредиент <b><?php echo $item->name; ?></b> [<?php echo $item->id; ?>]?"><i class="fas fa-trash"></i> удалить</button>
                                 </form>
-                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_ingredients_edit', ['id' => $item->id]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
+                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_entity_edit', ['entity' => 'ingredients', 'id' => $item->id]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
                             </td>
                         </tr>
                         <?php } ?>

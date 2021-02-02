@@ -74,25 +74,25 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="<?php echo url('admin_recipes'); ?>" class="nav-link">
+                        <a href="<?php echo url('admin_entity_list', ['entity' => 'recipes']); ?>" class="nav-link">
                             <i class="nav-icon fas fa-concierge-bell"></i>
                             <p>Рецепты</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?php echo url('admin_users'); ?>" class="nav-link">
+                        <a href="<?php echo url('admin_entity_list', ['entity' => 'users']); ?>" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
                             <p>Пользователи</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?php echo url('admin_categories'); ?>" class="nav-link">
+                        <a href="<?php echo url('admin_entity_list', ['entity' => 'categories']); ?>" class="nav-link">
                             <i class="nav-icon fas fa-folder"></i>
                             <p>Категории</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?php echo url('admin_ingredients'); ?>" class="nav-link">
+                        <a href="<?php echo url('admin_entity_list', ['entity' => 'ingredients']); ?>" class="nav-link">
                             <i class="nav-icon fas fa-cheese"></i>
                             <p>Ингредиенты</p>
                         </a>

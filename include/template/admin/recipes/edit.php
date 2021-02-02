@@ -20,14 +20,14 @@
         <?php } else { ?>
             <div class="card">
                 <!-- form start -->
-                <form class="form-horizontal" method="post" action="<?php echo url('admin_recipes_update'); ?>">
+                <form class="form-horizontal" method="post" action="<?php echo url('admin_entity_update', ['entity' => 'recipes']); ?>">
                     <div class="card-body">
                         <?php if($arData['user_id'] > 0) { ?>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Пользователь</label>
                             <div class="col-sm-10">
                                 <div class="form-control">
-                                    <a href="<?php echo url('admin_users_edit', ['id' => $arData['user_id']]); ?>" target="_blank">[<?php echo $arData['user_id']; ?>]</a> <?php echo $arData['user_name']; ?>
+                                    <a href="<?php echo url('admin_entity_edit', ['entity' => 'users', 'id' => $arData['user_id']]); ?>" target="_blank">[<?php echo $arData['user_id']; ?>]</a> <?php echo $arData['user_name']; ?>
                                     <input type="hidden" name="user_id" value="<?php echo $arData['user_id']; ?>">
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <a href="<?php echo url('admin_recipes'); ?>" class="btn btn-default">Отмена</a>
+                        <a href="<?php echo url('admin_entity_list', ['entity' => 'recipes']); ?>" class="btn btn-default">Отмена</a>
                         <button type="submit" class="btn btn-primary float-right">Сохранить</button>
                     </div>
                     <!-- /.card-footer -->

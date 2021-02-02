@@ -11,11 +11,11 @@ if(!empty($_POST)) {
     if($name != '') {
         $result = addRecipe($name, $description, $user_id, $date, $arIngredients, $arCategories);
         if($result == true) {
-            redirect(url('admin_recipes'));
+            redirect(url('admin_entity_list', ['entity' => 'recipes']));
         } else {
-            redirect(url('admin_recipes_add'), 307);
+            redirect(url('admin_entity_add', ['entity' => 'recipes']), 307);
         }
     }
 }
 
-redirect(url('admin_recipes'));
+redirect(url('admin_entity_list', ['entity' => 'recipes']));

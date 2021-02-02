@@ -15,7 +15,7 @@
 
         <div class="row mb-3 mt-n5">
             <div class="col col-sm-12">
-                <a href="<?php echo url('admin_users_add'); ?>" class="btn btn-info float-right"><i class="fas fa-user-plus"></i> добавить нового пользователя</a>
+                <a href="<?php echo url('admin_entity_add', ['entity' => 'users']); ?>" class="btn btn-info float-right"><i class="fas fa-user-plus"></i> добавить нового пользователя</a>
             </div>
         </div>
 
@@ -44,10 +44,10 @@
                             <td><?php echo $user->email; ?></td>
                             <td><?php if($user->is_admin == 1) { ?><span class="badge bg-primary">admin</span><?php } ?></td>
                             <td class="text-right">
-                                <form method="post" action="<?php echo url('admin_users_delete', ['id' => $user->id]); ?>">
+                                <form method="post" action="<?php echo url('admin_entity_delete', ['entity' => 'users', 'id' => $user->id]); ?>">
                                     <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить пользователя <b><?php echo $user->name; ?></b> [<?php echo $user->email; ?>]?"><i class="fas fa-trash"></i> удалить</button>
                                 </form>
-                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_users_edit', ['id' => $user->id]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
+                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_entity_edit', ['entity' => 'users', 'id' => $user->id]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
                             </td>
                         </tr>
                         <?php } ?>

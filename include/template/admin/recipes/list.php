@@ -15,7 +15,7 @@
 
         <div class="row mb-3 mt-n5">
             <div class="col col-sm-12">
-                <a href="<?php echo url('admin_recipes_add'); ?>" class="btn btn-info float-right"><i class="fas fa-plus"></i> добавить рецепт</a>
+                <a href="<?php echo url('admin_entity_add', ['entity' => 'recipes']); ?>" class="btn btn-info float-right"><i class="fas fa-plus"></i> добавить рецепт</a>
             </div>
         </div>
 
@@ -43,7 +43,7 @@
                             <td><?php echo $arItem['name']; ?></td>
                             <td>
                                 <?php if($arItem['user_id'] > 0) { ?>
-                                    <a href="<?php echo url('admin_users_edit', ['id' => $arItem['user_id']]); ?>" target="_blank">
+                                    <a href="<?php echo url('admin_entity_edit', ['entity' => 'users', 'id' => $arItem['user_id']]); ?>" target="_blank">
                                         [<?php echo $arItem['user_id']; ?>]
                                     </a>
                                     <?php echo $arItem['user_name']; ?>
@@ -51,10 +51,10 @@
                             </td>
                             <td><?php echo date('d.m.Y', strtotime($arItem['date'])); ?></td>
                             <td class="text-right">
-                                <form method="post" action="<?php echo url('admin_recipes_delete', ['id' => $arItem['id']]); ?>">
+                                <form method="post" action="<?php echo url('admin_entity_delete', ['entity' => 'recipes', 'id' => $arItem['id']]); ?>">
                                     <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить рецепт <b><?php echo $arItem['name']; ?></b> [<?php echo $arItem['id']; ?>]?"><i class="fas fa-trash"></i> удалить</button>
                                 </form>
-                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_recipes_edit', ['id' => $arItem['id']]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
+                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_entity_edit', ['entity' => 'recipes', 'id' => $arItem['id']]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
                             </td>
                         </tr>
                         <?php } ?>

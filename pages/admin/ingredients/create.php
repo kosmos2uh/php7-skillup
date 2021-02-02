@@ -11,12 +11,12 @@ if(!empty($_POST)) {
         $ingredient->name = $name;
         if($ingredient->add()) {
             FlashMessage::addSuccess('Ингредиент ' . $ingredient->name . ' успешно добавлен');
-            redirect(url('admin_ingredients'));
+            redirect(url('admin_entity_list', ['entity' => 'ingredients']));
         } else {
             FlashMessage::addError('Ингредиент ' . $ingredient->name . ' не добавлен');
-            redirect(url('admin_ingredients_add'), 307);
+            redirect(url('admin_entity_add', ['entity' => 'ingredients']), 307);
         }
     }
 }
 
-redirect(url('admin_ingredients'));
+redirect(url('admin_entity_list', ['entity' => 'ingredients']));

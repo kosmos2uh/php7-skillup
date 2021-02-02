@@ -8,11 +8,11 @@ if(!empty($_POST)) {
     if($id > 0 && $name != '') {
         $result = updateCategory($id, $name, $parent_id);
         if($result == true) {
-            redirect(url('admin_categories'));
+            redirect(url('admin_entity_list', ['entity' => 'categories']));
         } else {
-            redirect(url('admin_categories_edit', ['id' => $id]), 307);
+            redirect(url('admin_entity_edit', ['entity' => 'categories', 'id' => $id]), 307);
         }
     }
 }
 
-redirect(url('admin_categories'));
+redirect(url('admin_entity_list', ['entity' => 'categories']));

@@ -20,7 +20,7 @@
         <?php } else { ?>
             <div class="card">
                 <!-- form start -->
-                <form class="form-horizontal" method="post" action="<?php echo url('admin_ingredients_update'); ?>">
+                <form class="form-horizontal" method="post" action="<?php echo url('admin_entity_update', ['entity' => 'ingredients']); ?>">
                     <div class="card-body">
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Название</label>
@@ -31,7 +31,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <a href="<?php echo url('admin_ingredients'); ?>" class="btn btn-default">Отмена</a>
+                        <a href="<?php echo url('admin_entity_list', ['entity' => 'ingredients']); ?>" class="btn btn-default">Отмена</a>
                         <button type="submit" class="btn btn-primary float-right">Сохранить</button>
                     </div>
                     <!-- /.card-footer -->

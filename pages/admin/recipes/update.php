@@ -12,11 +12,11 @@ if(!empty($_POST)) {
     if($id > 0 && $name != '') {
         $result = updateRecipe($id, $name, $description, $user_id, $date, $arIngredients, $arCategories);
         if($result == true) {
-            redirect(url('admin_recipes'));
+            redirect(url('admin_entity_list', ['entity' => 'recipes']));
         } else {
-            redirect(url('admin_recipes_edit', ['id' => $id]), 307);
+            redirect(url('admin_entity_edit', ['entity' => 'recipes', 'id' => $id]), 307);
         }
     }
 }
 
-redirect(url('admin_recipes'));
+redirect(url('admin_entity_list', ['entity' => 'recipes']));

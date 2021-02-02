@@ -15,7 +15,7 @@
 
         <div class="row mb-3 mt-n5">
             <div class="col col-sm-12">
-                <a href="<?php echo url('admin_categories_add'); ?>" class="btn btn-info float-right"><i class="fas fa-folder-plus"></i> добавить категорию</a>
+                <a href="<?php echo url('admin_entity_add', ['entity' => 'categories']); ?>" class="btn btn-info float-right"><i class="fas fa-folder-plus"></i> добавить категорию</a>
             </div>
         </div>
 
@@ -53,10 +53,10 @@
                                 ?></td>
                             <td><?php echo $arItem['parent_id']; ?></td>
                             <td class="text-right">
-                                <form method="post" action="<?php echo url('admin_categories_delete', ['id' => $arItem['id']]); ?>">
+                                <form method="post" action="<?php echo url('admin_entity_delete', ['entity' => 'categories', 'id' => $arItem['id']]); ?>">
                                     <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить категорию <b><?php echo $arItem['name']; ?></b> [<?php echo $arItem['id']; ?>]?"><i class="fas fa-trash"></i> удалить</button>
                                 </form>
-                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_categories_edit', ['id' => $arItem['id']]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
+                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_entity_edit', ['entity' => 'categories', 'id' => $arItem['id']]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
                             </td>
                         </tr>
                         <?php } ?>

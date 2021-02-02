@@ -15,10 +15,10 @@ if(!empty($_POST)) {
         $user->password = $password;
         $user->is_admin = $is_admin;
         if($user->add()) {
-            redirect(url('admin_users'));
+            redirect(url('admin_entity_list', ['entity' => 'users']));
         } else {
-            redirect(url('admin_users_add'), 307);
+            redirect(url('admin_entity_add', ['entity' => 'users']), 307);
         }
     }
 }
-redirect(url('admin_users'));
+redirect(url('admin_entity_list', ['entity' => 'users']));

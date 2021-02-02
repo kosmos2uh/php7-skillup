@@ -12,12 +12,12 @@ if(!empty($_POST)) {
         $user->password = trim($_POST['password'] ?? '');
 
         if($user->update()) {
-            redirect(url('admin_users'));
+            redirect(url('admin_entity_list', ['entity' => 'users']));
         } else {
-            redirect(url('admin_users_edit', ['id' => $user->id]), 307);
+            redirect(url('admin_entity_edit', ['entity' => 'users', 'id' => $user->id]), 307);
         }
     } else {
-        redirect(url('admin_users'));
+        redirect(url('admin_entity_list', ['entity' => 'users']));
     }
 }
-redirect(url('admin_users'));
+redirect(url('admin_entity_list', ['entity' => 'users']));

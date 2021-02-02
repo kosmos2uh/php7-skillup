@@ -100,19 +100,7 @@ function isAdminUser() {
 }
 
 function url($name, $params = []) {
-
-    $url = Route::$routes[$name][1] ?? '';
-
-    if(!empty($params)) {
-        $arReplace = [];
-        foreach ($params as $key => $value) {
-            $arReplace['<' . $key . '>'] = $value;
-        }
-        if(!empty($arReplace)) {
-            $url = str_replace(array_keys($arReplace), $arReplace, $url);
-        }
-    }
-    return $url;
+    return Route::url($name, $params);
 }
 
 function printTemplateHtml($template, $arData = []) {

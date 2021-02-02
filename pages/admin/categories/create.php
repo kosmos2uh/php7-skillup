@@ -7,11 +7,11 @@ if(!empty($_POST)) {
     if($name != '') {
         $result = addCategory($name, $parent_id);
         if($result == true) {
-            redirect(url('admin_categories'));
+            redirect(url('admin_entity_list', ['entity' => 'categories']));
         } else {
-            redirect(url('admin_categories_add'), 307);
+            redirect(url('admin_entity_add', ['entity' => 'categories']), 307);
         }
     }
 }
 
-redirect(url('admin_categories'));
+redirect(url('admin_entity_list', ['entity' => 'categories']));
