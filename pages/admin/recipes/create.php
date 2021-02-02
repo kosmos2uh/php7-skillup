@@ -6,7 +6,7 @@ use App\Helpers\FlashMessage;
 
 if(!empty($_POST)) {
     $name = trim($_POST['name'] ?? '');
-    $user = new User($_POST['user_id'] ?? 0);
+    $user = new User(intval($_POST['user_id']) ?? 0);
     $description = trim($_POST['description'] ?? '');
     $date = trim($_POST['date'] ?? '');
     $arIngredients = $_POST['ingredients'] ?? [];

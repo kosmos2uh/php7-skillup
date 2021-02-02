@@ -48,7 +48,7 @@
                             </td>
                             <td><?php echo $item->name; ?></td>
                             <td>
-                                <?php if($item->user->id > 0) { ?>
+                                <?php if(!empty($item->user) && $item->user->id > 0) { ?>
                                     <a href="<?php echo url('admin_entity_edit', ['entity' => 'users', 'id' => $item->user->id]); ?>" target="_blank">
                                         [<?php echo $item->user->id; ?>]
                                     </a>

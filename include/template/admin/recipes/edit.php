@@ -22,7 +22,7 @@
                 <!-- form start -->
                 <form class="form-horizontal" method="post" action="<?php echo url('admin_entity_update', ['entity' => 'recipes']); ?>" enctype="multipart/form-data">
                     <div class="card-body">
-                        <?php if($recipe->user->id > 0) { ?>
+                        <?php if(!empty($recipe->user) && $recipe->user->id > 0) { ?>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Пользователь</label>
                             <div class="col-sm-10">
