@@ -30,6 +30,7 @@
                         <thead>
                         <tr>
                             <th style="width: 10px">ID</th>
+                            <th>Картинка</th>
                             <th>Название</th>
                             <th>Пользователь</th>
                             <th>Дата</th>
@@ -37,24 +38,29 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($arData as $arItem) { ?>
+                        <?php foreach ($arData as /** @var \App\Entity\Recipe $item */ $item) { ?>
                         <tr>
-                            <td><?php echo $arItem['id']; ?></td>
-                            <td><?php echo $arItem['name']; ?></td>
+                            <td><?php echo $item->id; ?></td>
                             <td>
-                                <?php if($arItem['user_id'] > 0) { ?>
-                                    <a href="<?php echo url('admin_entity_edit', ['entity' => 'users', 'id' => $arItem['user_id']]); ?>" target="_blank">
-                                        [<?php echo $arItem['user_id']; ?>]
-                                    </a>
-                                    <?php echo $arItem['user_name']; ?>
+                                <?php if($item->image != '') { ?>
+                                    <img src="<?php echo getEntityImage('recipe', $item->image); ?>" alt="" style="width: 100px" />
                                 <?php } ?>
                             </td>
-                            <td><?php echo date('d.m.Y', strtotime($arItem['date'])); ?></td>
+                            <td><?php echo $item->name; ?></td>
+                            <td>
+                                <?php if($item->user->id > 0) { ?>
+                                    <a href="<?php echo url('admin_entity_edit', ['entity' => 'users', 'id' => $item->user->id]); ?>" target="_blank">
+                                        [<?php echo $item->user->id; ?>]
+                                    </a>
+                                    <?php echo $item->user->name; ?>
+                                <?php } ?>
+                            </td>
+                            <td><?php echo date('d.m.Y', strtotime($item->date)); ?></td>
                             <td class="text-right">
-                                <form method="post" action="<?php echo url('admin_entity_delete', ['entity' => 'recipes', 'id' => $arItem['id']]); ?>">
-                                    <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить рецепт <b><?php echo $arItem['name']; ?></b> [<?php echo $arItem['id']; ?>]?"><i class="fas fa-trash"></i> удалить</button>
+                                <form method="post" action="<?php echo url('admin_entity_delete', ['entity' => 'recipes', 'id' => $item->id]); ?>">
+                                    <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить рецепт <b><?php echo $item->name; ?></b> [<?php echo $item->id; ?>]?"><i class="fas fa-trash"></i> удалить</button>
                                 </form>
-                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_entity_edit', ['entity' => 'recipes', 'id' => $arItem['id']]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
+                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_entity_edit', ['entity' => 'recipes', 'id' => $item->id]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
                             </td>
                         </tr>
                         <?php } ?>

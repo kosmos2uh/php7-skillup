@@ -37,6 +37,31 @@ class Category
         return $arItems;
     }
 
+    public static function getListForRecipe(Recipe $recipe): array
+    {
+        $arItems = [];
+        if($recipe->id > 0) {
+            $link = db_connect();
+            $query = "
+                SELECT c.id, c.name, c.parent_id, c.image
+                FROM recipes_categories rc
+                LEFT JOIN categories c on rc.category_id = c.id
+                WHERE rc.recipe_id = {$recipe->id}
+                ORDER BY c.id
+            ";
+            $result = mysqli_query($link, $query);
+            while ($row = mysqli_fetch_assoc($result)) {
+                $category = new self();
+                $category->id = $row['id'];
+                $category->name = $row['name'];
+                $category->parent_id = $row['parent_id'];
+                $category->image = $row['image'];
+                $arItems[] = $category;
+            }
+        }
+        return $arItems;
+    }
+
     public static function getTree($parent_id = 0, $max_level = 0, $current_level = 0) {
         $arResult = [];
         foreach (self::getList() as /** @var self $category */ $category) {

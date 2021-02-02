@@ -1,11 +1,13 @@
 <?php
-$arData = getRecipeItem($arRoute['param']['id'] ?? 0);
 
-if(!empty($_POST)) {
-    $arData = $_POST;
-}
+use App\Entity\Category;
+use App\Entity\Ingredient;
+use App\Entity\Recipe;
 
-$arData['ingredients_list'] = getIngredientsList();
-$arData['categories_list'] = getCategoriesListStructured();
+$arData = [
+    'recipe' => new Recipe($arRoute['param']['id'] ?? 0),
+    'ingredients_list' => Ingredient::getList(),
+    'categories_list' => Category::getListStructured(),
+];
 
 printTemplateHtml('admin/recipes/edit', $arData);
