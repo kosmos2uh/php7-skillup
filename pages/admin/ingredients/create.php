@@ -10,13 +10,17 @@ if(!empty($_POST)) {
         $ingredient = new Ingredient();
         $ingredient->name = $name;
         if($ingredient->add()) {
-            FlashMessage::addSuccess('Ингредиент ' . $ingredient->name . ' успешно добавлен');
+            FlashMessage::addSuccess('Ингредиент ' . $name . ' успешно добавлен');
             redirect(url('admin_entity_list', ['entity' => 'ingredients']));
         } else {
-            FlashMessage::addError('Ингредиент ' . $ingredient->name . ' не добавлен');
+            FlashMessage::addError('Ингредиент ' . $name . ' не добавлен');
             redirect(url('admin_entity_add', ['entity' => 'ingredients']), 307);
         }
+    } else {
+        FlashMessage::addError('Ингредиент ' . $name . ' не добавлен, не все поля заполнены корректно');
     }
+} else {
+    FlashMessage::addError('Ингредиент не добавлен, отсутствуют входные данные');
 }
 
 redirect(url('admin_entity_list', ['entity' => 'ingredients']));

@@ -28,12 +28,12 @@
                         <div class="col-sm-10">
                             <select name="parent_id" class="form-control">
                                 <option value="">Верхний уровень</option>
-                                <?php foreach ($arData['categories_all'] as $arCategory) { ?>
-                                    <option value="<?php echo $arCategory['id']; ?>"<?php if(($arData['parent_id'] ?? '') == $arCategory['id']) { ?> selected="selected" <?php } ?>><?php
-                                        for($i = 0; $i <= $arCategory['level']; $i++) {
+                                <?php foreach ($arData['categories_all'] as /** @var \App\Entity\Category $category_item */ $category_item) { ?>
+                                    <option value="<?php echo $category_item->id; ?>"<?php if(($arData['parent_id'] ?? '') == $category_item->id) { ?> selected="selected" <?php } ?>><?php
+                                        for($i = 0; $i <= $category_item->level; $i++) {
                                             echo '&ndash; &ndash; ';
                                         }
-                                        echo $arCategory['name'];
+                                        echo '[', $category_item->id, '] ', $category_item->name;
                                         ?></option>
                                 <?php } ?>
                             </select>

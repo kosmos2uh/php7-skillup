@@ -1,6 +1,7 @@
 <?php
 
 use App\Entity\User;
+use App\Helpers\FlashMessage;
 
 if(!empty($_POST)) {
     $id = intval($_POST['id'] ?? 0);
@@ -12,12 +13,17 @@ if(!empty($_POST)) {
         $user->password = trim($_POST['password'] ?? '');
 
         if($user->update()) {
+            FlashMessage::addSuccess('Пользователь ' . $user->name . ' успешно изменен');
             redirect(url('admin_entity_list', ['entity' => 'users']));
         } else {
+            FlashMessage::addError('Пользователя ' . $user->name . ' не удалось изменить');
             redirect(url('admin_entity_edit', ['entity' => 'users', 'id' => $user->id]), 307);
         }
     } else {
-        redirect(url('admin_entity_list', ['entity' => 'users']));
+        FlashMessage::addError('Пользователь не найден');
     }
+} else {
+    FlashMessage::addError('Пользователь не изменен, отсутствуют входные данные');
 }
+
 redirect(url('admin_entity_list', ['entity' => 'users']));

@@ -37,26 +37,26 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($arData as $arItem) { ?>
+                        <?php foreach ($arData as /** @var \App\Entity\Category $item */ $item) { ?>
                         <tr>
-                            <td><?php echo $arItem['id']; ?></td>
+                            <td><?php echo $item->id; ?></td>
                             <td>
-                                <?php if($arItem['image'] != '') { ?>
-                                    <img src="<?php echo getEntityImage('category', $arItem['image']); ?>" alt="" style="width: 100px" />
+                                <?php if($item->image != '') { ?>
+                                    <img src="<?php echo getEntityImage('category', $item->image); ?>" alt="" style="width: 100px" />
                                 <?php } ?>
                             </td>
                             <td><?php
-                                for($i = 0; $i < $arItem['level']; $i++) {
+                                for($i = 0; $i < $item->level; $i++) {
                                     echo '&mdash; &mdash; ';
                                 }
-                                echo $arItem['name'];
+                                echo $item->name;
                                 ?></td>
-                            <td><?php echo $arItem['parent_id']; ?></td>
+                            <td><?php echo $item->parent_id; ?></td>
                             <td class="text-right">
-                                <form method="post" action="<?php echo url('admin_entity_delete', ['entity' => 'categories', 'id' => $arItem['id']]); ?>">
-                                    <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить категорию <b><?php echo $arItem['name']; ?></b> [<?php echo $arItem['id']; ?>]?"><i class="fas fa-trash"></i> удалить</button>
+                                <form method="post" action="<?php echo url('admin_entity_delete', ['entity' => 'categories', 'id' => $item->id]); ?>">
+                                    <button class="btn btn-xs btn-danger float-right delete-btn" type="submit" data-toggle="modal" data-target="#modal-delete-item" data-message="Удалить категорию <b><?php echo $item->name; ?></b> [<?php echo $item->id; ?>]?"><i class="fas fa-trash"></i> удалить</button>
                                 </form>
-                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_entity_edit', ['entity' => 'categories', 'id' => $arItem['id']]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
+                                <a class="btn btn-default btn-xs float-right mr-2" href="<?php echo url('admin_entity_edit', ['entity' => 'categories', 'id' => $item->id]); ?>"><i class="fas fa-pencil-alt"></i> редактировать</a>
                             </td>
                         </tr>
                         <?php } ?>

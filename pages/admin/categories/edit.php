@@ -1,10 +1,10 @@
 <?php
-$arData = getCategoryItem($arRoute['param']['id'] ?? 0);
 
-if(!empty($_POST)) {
-    $arData = $_POST;
-}
+use App\Entity\Category;
 
-$arData['categories_all'] = getCategoriesListStructured();
+$arData = [
+    'category' => new Category($arRoute['param']['id'] ?? 0),
+    'categories_all' => Category::getListStructured(),
+];
 
 printTemplateHtml('admin/categories/edit', $arData);

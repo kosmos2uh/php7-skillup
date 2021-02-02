@@ -8,12 +8,12 @@
         </div>
     </div><!-- /.container-fluid -->
 </section>
-
+<?php /** @var \App\Entity\Category $category */ $category = $arData['category']; ?>
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
 
-        <?php if(empty($arData)) { ?>
+        <?php if($category->id == 0) { ?>
             <div class="alert alert-danger">
                 <i class="icon fas fa-ban"></i> Категория не найдена!
             </div>
@@ -25,7 +25,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Название</label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" value="<?php echo $arData['name']; ?>" class="form-control" required>
+                                <input type="text" name="name" value="<?php echo $_POST['name'] ?? $category->name; ?>" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -33,12 +33,12 @@
                             <div class="col-sm-10">
                                 <select name="parent_id" class="form-control">
                                     <option value="">Верхний уровень</option>
-                                    <?php foreach ($arData['categories_all'] as $arCategory) { ?>
-                                        <option value="<?php echo $arCategory['id']; ?>"<?php if($arData['parent_id'] == $arCategory['id']) { ?> selected="selected" <?php } ?>><?php
-                                            for($i = 0; $i <= $arCategory['level']; $i++) {
+                                    <?php foreach ($arData['categories_all'] as /** @var \App\Entity\Category $category_item */ $category_item) { ?>
+                                        <option value="<?php echo $category_item->id; ?>"<?php if(($_POST['parent_id'] ?? $category->parent_id) == $category_item->id) { ?> selected="selected" <?php } ?>><?php
+                                            for($i = 0; $i <= $category_item->level; $i++) {
                                                 echo '&ndash; &ndash; ';
                                             }
-                                            echo '[', $arCategory['id'], '] ', $arCategory['name'];
+                                            echo '[', $category_item->id, '] ', $category_item->name;
                                             ?></option>
                                     <?php } ?>
                                 </select>
@@ -51,8 +51,8 @@
                                     <input type="file" name="image" class="custom-file-input" accept="image/jpeg, image/png" id="image_input">
                                     <label class="custom-file-label" for="image_input">Выбрать картинку</label>
                                 </div>
-                                <?php if(!empty($arData['image'])) { ?>
-                                    <img src="<?php echo getEntityImage('category', $arData['image']); ?>" alt="" style="max-width: 200px;">
+                                <?php if(!empty($category->image)) { ?>
+                                    <img src="<?php echo getEntityImage('category', $category->image); ?>" alt="" style="max-width: 200px;">
                                 <?php } ?>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                         <button type="submit" class="btn btn-primary float-right">Сохранить</button>
                     </div>
                     <!-- /.card-footer -->
-                    <input type="hidden" name="id" value="<?php echo $arData['id']; ?>">
+                    <input type="hidden" name="id" value="<?php echo $category->id; ?>">
                 </form>
             </div>
         <?php }  ?>
