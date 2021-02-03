@@ -4,6 +4,7 @@
 namespace App\Entity;
 
 use App\Entity\User;
+use App\Helpers\EntityImage;
 
 class Recipe
 {
@@ -23,7 +24,7 @@ class Recipe
         }
     }
 
-    public static function getList(): array
+    public static function getList($limit = 0, $category_id = 0, $ingredient_id = 0): array
     {
         $link = db_connect();
         $arItems = [];
@@ -43,6 +44,7 @@ class Recipe
             FROM recipes r
             LEFT JOIN users u on r.user_id = u.id
             ORDER BY r.id DESC
+            " . ($limit > 0 ? "LIMIT " . $limit : "") . "
         ";
         $result = mysqli_query($link, $query);
         while ($row = mysqli_fetch_assoc($result)) {
@@ -121,7 +123,7 @@ class Recipe
         $result = false;
         if($this->id == 0) {
             $link = db_connect();
-            $this->image = saveEntityImage('recipe', 'image');
+            $this->image = EntityImage::saveEntityImage('recipe', 'image');
             $query = "
                 INSERT INTO recipes
                 SET
@@ -138,7 +140,7 @@ class Recipe
                 $result = true;
             } else {
                 if(!empty($this->image)) {
-                    deleteEntityImage('recipe', $this->image);
+                    EntityImage::deleteEntityImage('recipe', $this->image);
                 }
             }
         }
@@ -152,9 +154,9 @@ class Recipe
 
             $link = db_connect();
 
-            if($image = saveEntityImage('recipe', 'image')) {
+            if($image = EntityImage::saveEntityImage('recipe', 'image')) {
                 if(!empty($this->image)) {
-                    deleteEntityImage('recipe', $this->image);
+                    EntityImage::deleteEntityImage('recipe', $this->image);
                 }
                 $this->image = $image;
             }
@@ -184,7 +186,7 @@ class Recipe
         if($this->id > 0) {
             $link = db_connect();
             if(!empty($this->image)) {
-                deleteEntityImage('recipe', $this->image);
+                EntityImage::deleteEntityImage('recipe', $this->image);
             }
             $query = "DELETE FROM recipes WHERE id = {$this->id}";
             $result = mysqli_query($link, $query);

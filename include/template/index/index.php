@@ -6,9 +6,9 @@
 </div>
 <div class="row mb-3">
     <div class="col-8">
-        <?php if(isset($arData['news']) && !empty($arData['news'])) { ?>
-            <h3>Посдедние новости</h3>
-            <?php printTemplateHtml('news/list', $arData['news']); ?>
+        <?php if(isset($arData['recipes']) && !empty($arData['recipes'])) { ?>
+            <h3>Посдедние рецепты</h3>
+            <?php printTemplateHtml('recipe/list', $arData['recipes']); ?>
         <?php } else { ?>
             <p>Новостей нет</p>
         <?php } ?>
@@ -19,7 +19,7 @@
 </div>
 
 <?php
-if(isset($arData['photo_news']) && !empty($arData['photo_news'])) {
-    printTemplateHtml('news/index_photo_news', $arData['photo_news']);
+if(isset($arData['categories']) && !empty($arData['categories'])) {
+    printTemplateHtml('category/list', $arData['categories']);
 }
 ?>

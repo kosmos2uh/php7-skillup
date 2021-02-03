@@ -9,10 +9,10 @@ $arRouteToPage = [
     'admin_entity_delete' => 'delete',
 ];
 
-$entity = $arRoute['param']['entity'] ?? '';
+$entity = $route->param['entity'] ?? '';
 if(!empty($entity)) {
 
-    $page = $arRouteToPage[$arRoute['name']] ?? '';
+    $page = $arRouteToPage[$route->name] ?? '';
 
     if(!empty($page)) {
         $file = $_SERVER['DOCUMENT_ROOT'] . '/pages/admin/' . $entity . '/' . $page . '.php';

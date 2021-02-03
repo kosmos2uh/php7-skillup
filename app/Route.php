@@ -6,12 +6,18 @@ namespace App;
 
 class Route
 {
+
+    public string $name = '';
+    public string $page = '404';
+    public array $param = [];
+
     private static array $routes = [
         'main_page' => ['/', '/', 'index'],
         'news_list' => ['/news/', '/news/', 'news/list'],
         'news_detail' => ['/news/([0-9]+)-([0-9a-z-]+).html', '/news/<id>-<vvv_id>.html', 'news/detail'],
         'contacts' => ['/contacts/', '/contacts/', 'contacts/index'],
         'contacts_send_form' => ['/contacts/send/', '/contacts/send/', 'contacts/send'],
+        'recipe_detail' => ['/recipe/([0-9]+)/', '/recipe/<id>/', 'recipe/detail'],
 
         'login' => ['/auth/', '/auth/', 'auth'],
         'logout' => ['/logout/', '/logout/', 'logout'],
@@ -34,30 +40,29 @@ class Route
         'admin_entity_delete',
     ];
 
-    public static function get($path = '') {
+    public function __construct($path = '')
+    {
+        $this->get($path);
+    }
+
+    private function get($path = '') {
 
         if($path == '') {
             $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         }
 
-        $arRoute = [
-            'name' => '',
-            'page' => '404',
-            'param' => [],
-        ];
-
         foreach (self::$routes as $name => $arValue) {
             $pattern = '/^' . str_replace('/', '\/', $arValue[0]) . '$/';
             if(preg_match($pattern, $path, $matches)) {
 
-                $arRoute['name'] = $name;
-                $arRoute['page'] = $arValue[2];
+                $this->name = $name;
+                $this->page = $arValue[2];
 
                 if(count($matches) > 1) {
                     preg_match_all("/<(.+?)>/", $arValue[1], $matches2);
 
                     foreach ($matches2[1] as $key => $param_name) {
-                        $arRoute['param'][$param_name] = $matches[$key + 1];
+                        $this->param[$param_name] = $matches[$key + 1];
                     }
                 }
 
@@ -65,12 +70,11 @@ class Route
 
             }
         }
-
-        return $arRoute;
     }
 
-    public static function needHeaderFooter($route_name) {
-        return !in_array($route_name, self::$arRoutesWithoutHeaderAndFooter);
+    public function needHeaderFooter(): bool
+    {
+        return !in_array($this->name, self::$arRoutesWithoutHeaderAndFooter);
     }
 
     public static function url($name, $params = []) {
@@ -86,5 +90,10 @@ class Route
             }
         }
         return $url;
+    }
+
+    public function isAdminRoute(): bool
+    {
+        return strpos($this->name, 'admin_') === 0;
     }
 }

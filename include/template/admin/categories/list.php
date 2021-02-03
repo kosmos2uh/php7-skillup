@@ -15,7 +15,9 @@
 
         <div class="row mb-3 mt-n5">
             <div class="col col-sm-12">
-                <a href="<?php echo url('admin_entity_add', ['entity' => 'categories']); ?>" class="btn btn-info float-right"><i class="fas fa-folder-plus"></i> добавить категорию</a>
+                <a href="<?php use App\Helpers\EntityImage;
+
+                echo url('admin_entity_add', ['entity' => 'categories']); ?>" class="btn btn-info float-right"><i class="fas fa-folder-plus"></i> добавить категорию</a>
             </div>
         </div>
 
@@ -42,7 +44,7 @@
                             <td><?php echo $item->id; ?></td>
                             <td>
                                 <?php if($item->image != '') { ?>
-                                    <img src="<?php echo getEntityImage('category', $item->image); ?>" alt="" style="width: 100px" />
+                                    <img src="<?php echo EntityImage::getEntityImage('category', $item->image); ?>" alt="" style="width: 100px" />
                                 <?php } ?>
                             </td>
                             <td><?php

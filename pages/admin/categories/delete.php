@@ -3,7 +3,7 @@
 use App\Entity\Category;
 use App\Helpers\FlashMessage;
 
-$category = new Category($arRoute['param']['id'] ?? 0);
+$category = new Category($route->param['id'] ?? 0);
 $name = $category->name;
 if($category->delete()) {
     FlashMessage::addSuccess('Категория ' . $name . ' удалена');

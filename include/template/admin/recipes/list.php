@@ -15,7 +15,9 @@
 
         <div class="row mb-3 mt-n5">
             <div class="col col-sm-12">
-                <a href="<?php echo url('admin_entity_add', ['entity' => 'recipes']); ?>" class="btn btn-info float-right"><i class="fas fa-plus"></i> добавить рецепт</a>
+                <a href="<?php use App\Helpers\EntityImage;
+
+                echo url('admin_entity_add', ['entity' => 'recipes']); ?>" class="btn btn-info float-right"><i class="fas fa-plus"></i> добавить рецепт</a>
             </div>
         </div>
 
@@ -43,7 +45,7 @@
                             <td><?php echo $item->id; ?></td>
                             <td>
                                 <?php if($item->image != '') { ?>
-                                    <img src="<?php echo getEntityImage('recipe', $item->image); ?>" alt="" style="width: 100px" />
+                                    <img src="<?php echo EntityImage::getEntityImage('recipe', $item->image); ?>" alt="" style="width: 100px" />
                                 <?php } ?>
                             </td>
                             <td><?php echo $item->name; ?></td>

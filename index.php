@@ -7,12 +7,13 @@ include $_SERVER['DOCUMENT_ROOT'] . '/app/Autoloader.php';
 
 AutoLoader::register();
 
+use \App\Auth;
 use \App\Route;
 
-$arRoute = Route::get();
+$route = new Route();
 
 // получаем путь к файлу
-$page_file = $_SERVER['DOCUMENT_ROOT'] . '/pages/' . $arRoute['page'] . '.php';
+$page_file = $_SERVER['DOCUMENT_ROOT'] . '/pages/' . $route->page . '.php';
 
 // если файл не существует, подключаем 404 страницу
 if(!is_file($page_file)) {
@@ -22,15 +23,15 @@ if(!is_file($page_file)) {
 //include $_SERVER['DOCUMENT_ROOT'] . '/smarty-3.1.36/libs/Smarty.class.php';
 //$smarty = new Smarty();
 
-$need_header_and_footer = Route::needHeaderFooter($arRoute['name']);
+$need_header_and_footer = $route->needHeaderFooter();
 
 $header_template = 'header';
 $footer_template = 'footer';
-if(isAdminRoute()) {
+if($route->isAdminRoute()) {
     $header_template = 'admin/header';
     $footer_template = 'admin/footer';
 
-    if(!isAdminUser()) {
+    if(!Auth::isAdmin()) {
         redirect(url('main_page'));
     }
 }

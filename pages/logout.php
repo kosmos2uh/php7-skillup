@@ -1,5 +1,5 @@
 <?php
 
-logoutUser();
+\App\Auth::logout();
 
 redirect(url('main_page'));

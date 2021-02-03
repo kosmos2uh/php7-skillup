@@ -1,15 +1,17 @@
 <?php
 
+use App\Auth;
+
 $error = false;
 
-if(isAuthorizedUser()) {
+if(Auth::isAuthorized()) {
     redirect(url('profile'));
 }
 
 $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
 
-if(!empty($_POST) && loginUser($email, $password)) {
+if(!empty($_POST) && Auth::login($email, $password)) {
     redirect(url('profile'));
 } elseif(isset($_POST['email'])) {
     $error = 'Неверная почта или пароль';

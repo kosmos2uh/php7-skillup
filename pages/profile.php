@@ -1,6 +1,8 @@
 <?php
 
-if(!isAuthorizedUser()) {
+use \App\Auth;
+
+if(!Auth::isAuthorized()) {
     redirect(url('auth'));
 }
 

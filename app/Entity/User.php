@@ -91,7 +91,7 @@ class User
     }
 
 
-    function delete(): bool
+    public function delete(): bool
     {
         $result = false;
         if($this->id > 0) {
@@ -100,5 +100,24 @@ class User
             $result = mysqli_query($link, $query);
         }
         return (bool)$result;
+    }
+
+    public static function getByEmail(string $email): User
+    {
+        $user = new self();
+        $link = db_connect();
+        $query = "SELECT id, name, email, password, is_admin FROM users WHERE email = ? LIMIT 1";
+        $stmt = mysqli_prepare($link, $query);
+        mysqli_stmt_bind_param($stmt, 's', $email);
+        mysqli_stmt_execute($stmt);
+        $res = mysqli_stmt_get_result($stmt);
+        if ($res && $row = mysqli_fetch_assoc($res)) {
+            $user->id = $row['id'];
+            $user->name = $row['name'];
+            $user->email = $row['email'];
+            $user->password = $row['password'];
+            $user->is_admin = $row['is_admin'];
+        }
+        return $user;
     }
 }

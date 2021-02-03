@@ -3,7 +3,7 @@
 use App\Entity\User;
 use App\Helpers\FlashMessage;
 
-$user = new User($arRoute['param']['id'] ?? 0);
+$user = new User($route->param['id'] ?? 0);
 $name = $user->name;
 if($user->delete()) {
     FlashMessage::addSuccess('Пользователь ' . $name . ' удален');

@@ -4,6 +4,8 @@
 namespace App\Entity;
 
 
+use App\Helpers\EntityImage;
+
 class Category
 {
     public int $id = 0;
@@ -104,7 +106,7 @@ class Category
     public function add(): bool
     {
         $result = false;
-        if($this->id == 0 && $this->image = saveEntityImage('category', 'image')) {
+        if($this->id == 0 && $this->image = EntityImage::saveEntityImage('category', 'image')) {
             $link = db_connect();
             $query = "
                 INSERT INTO categories
@@ -114,7 +116,7 @@ class Category
                     image = '" . $this->image . "'
             ";
             if(!($result = mysqli_query($link, $query))) {
-                deleteEntityImage('category', $this->image);
+                EntityImage::deleteEntityImage('category', $this->image);
             }
         }
         return (bool)$result;
@@ -127,9 +129,9 @@ class Category
 
             $link = db_connect();
 
-            if($image = saveEntityImage('category', 'image')) {
+            if($image = EntityImage::saveEntityImage('category', 'image')) {
                 if(!empty($this->image)) {
-                    deleteEntityImage('category', $this->image);
+                    EntityImage::deleteEntityImage('category', $this->image);
                 }
                 $this->image = $image;
             }
@@ -153,7 +155,7 @@ class Category
         if($this->id > 0) {
             $link = db_connect();
             if(!empty($this->image)) {
-                deleteEntityImage('category', $this->image);
+                EntityImage::deleteEntityImage('category', $this->image);
             }
             $query = "DELETE FROM categories WHERE id = {$this->id}";
             $result = mysqli_query($link, $query);

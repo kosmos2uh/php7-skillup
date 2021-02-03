@@ -8,7 +8,11 @@
         </div>
     </div><!-- /.container-fluid -->
 </section>
-<?php /** @var \App\Entity\Recipe $recipe */ $recipe = $arData['recipe']; ?>
+<?php /** @var \App\Entity\Recipe $recipe */
+
+use App\Helpers\EntityImage;
+
+$recipe = $arData['recipe']; ?>
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
@@ -88,7 +92,7 @@
                                     <label class="custom-file-label" for="image_input">Выбрать картинку</label>
                                 </div>
                                 <?php if(!empty($recipe->image)) { ?>
-                                    <img src="<?php echo getEntityImage('recipe', $recipe->image); ?>" alt="" style="max-width: 200px;">
+                                    <img src="<?php echo EntityImage::getEntityImage('recipe', $recipe->image); ?>" alt="" style="max-width: 200px;">
                                 <?php } ?>
                             </div>
                         </div>

@@ -1,10 +1,13 @@
 <?php
 
-$arNews = getLastNews(10);
+use App\Entity\Category;
+use App\Entity\Recipe;
 
-$arPhotoNews = getPhotoNews();
+$arCategories = Category::getTree(0, 1);
+
+$arRecipes = Recipe::getList(6);
 
 printTemplateHtml('index/index', [
-    'news' => $arNews,
-    'photo_news' => $arPhotoNews,
+    'categories' => $arCategories,
+    'recipes' => $arRecipes,
 ]);

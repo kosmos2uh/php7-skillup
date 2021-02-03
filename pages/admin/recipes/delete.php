@@ -3,7 +3,7 @@
 use App\Entity\Recipe;
 use App\Helpers\FlashMessage;
 
-$recipe = new Recipe($arRoute['param']['id'] ?? 0);
+$recipe = new Recipe($route->param['id'] ?? 0);
 $name = $recipe->name;
 if($recipe->delete()) {
     FlashMessage::addSuccess('Рецепт ' . $name . ' удален');

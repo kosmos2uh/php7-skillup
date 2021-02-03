@@ -3,7 +3,7 @@
 use App\Entity\Ingredient;
 use App\Helpers\FlashMessage;
 
-$ingredient = new Ingredient($arRoute['param']['id'] ?? 0);
+$ingredient = new Ingredient($route->param['id'] ?? 0);
 $name = $ingredient->name;
 if($ingredient->delete()) {
     FlashMessage::addSuccess('Ингредиент ' . $name . ' удален');

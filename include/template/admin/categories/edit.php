@@ -8,7 +8,11 @@
         </div>
     </div><!-- /.container-fluid -->
 </section>
-<?php /** @var \App\Entity\Category $category */ $category = $arData['category']; ?>
+<?php /** @var \App\Entity\Category $category */
+
+use App\Helpers\EntityImage;
+
+$category = $arData['category']; ?>
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
@@ -52,7 +56,7 @@
                                     <label class="custom-file-label" for="image_input">Выбрать картинку</label>
                                 </div>
                                 <?php if(!empty($category->image)) { ?>
-                                    <img src="<?php echo getEntityImage('category', $category->image); ?>" alt="" style="max-width: 200px;">
+                                    <img src="<?php echo EntityImage::getEntityImage('category', $category->image); ?>" alt="" style="max-width: 200px;">
                                 <?php } ?>
                             </div>
                         </div>
